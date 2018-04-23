@@ -11,7 +11,7 @@ public class abstract Animaux implements mangeable{
     return poids;
   }
   public String toString(){
-    return "C'est un "+nom+" de poids :"+poids+" qui équivault à "+rapportAlimentaire+" de rapportAlimentaire";
+    return "C'est un "+nom+" de poids :"+poids+" qui équivault à "+rapportAlimentaire+" de rapportAlimentaire.";
   }
   public abstract int estMange();
 }
