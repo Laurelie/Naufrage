@@ -1,3 +1,3 @@
 public interface Mangeable{
-  public void mange();
+  public void estManger();
 }
