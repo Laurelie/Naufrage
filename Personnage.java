@@ -41,8 +41,9 @@ public class Personnage{
   public void fabriquer(){
   
   }
-  public void manger(){
-  
+  public void manger(? extends Mangeable objet){
+    if (sante <= 100)
+      sante += objet.estMange();
   }
   public void combattre(){
   
