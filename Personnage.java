@@ -5,10 +5,14 @@ public class Personnage{
   private ArrayList<????> inventaire = new ArrayList<??????>(); //ou faire avec des listes ? pour ne pas avoir un inventaire infini
   private int energie;
   private int sante;
+  private int x;
+  private int y;
   public Personnage(String nom){
     this.nom = nom;
     energie = 100;
     sante = 100;
+    x=0;
+    y=0;
   }
   public String getNom(){
     return nom;
