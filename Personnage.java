@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Personnage{
+  private ArrayList<Lieu> carte = new ArrayLsit<Lieu>();
   private String nom;
   private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
   private int energie;
