@@ -42,7 +42,7 @@ public class Personnage{
   public void pecher(){
   
   }
-  public void ramasser(){
-  
+  public void ramasser(? extends Stockable objet){
+    inventaire.add(objet);
   }
 }
