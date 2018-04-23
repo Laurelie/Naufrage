@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Personnage{
   private String nom;
-  private ArrayList<????> inventaire = new ArrayList<??????>(); //ou faire avec des listes ? pour ne pas avoir un inventaire infini
+  private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
   private int energie;
   private int sante;
   private int x;
