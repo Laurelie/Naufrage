@@ -23,13 +23,25 @@ public class Personnage{
   public int getSante(){
     return sante;
   }
-  public ArrayList<????????> getInventaire(){
-    for
+  public ArrayList<? extends Stockage> getInventaire(){
+    return inventaire;      
   }
-  public void fabriquer(){}
-  public void manger(){}
-  public void combattre(){}
-  public void fuir(){}
-  public void pecher(){}
-  public void ramasser(){}
+  public void fabriquer(){
+  
+  }
+  public void manger(){
+  
+  }
+  public void combattre(){
+  
+  }
+  public void fuir(){
+  
+  }
+  public void pecher(){
+  
+  }
+  public void ramasser(){
+  
+  }
 }
