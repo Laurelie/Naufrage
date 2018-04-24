@@ -6,6 +6,7 @@ public class abstract Lieu{
   }
   public abstract void choixAction();
   public abstract void genererAnimal();
+  public abstract void decrireLieu();
   public void changerAnimal(Animal nouvelOccupant){
     occupant = nouvelOccupant;
   }
