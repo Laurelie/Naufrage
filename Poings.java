@@ -6,6 +6,6 @@ public class Poings extends Arme{
     System.out.println("Votre coup de poing passe à coté de l'animal.");
     }
   public void descriptionReussite(){
-    System.out.println("Vous assènez un sévère coup de poing à l'animal");
+    System.out.println("Vous assènez un sévère coup de poing à l'animal qui prend une blessure.");
     }
    }
