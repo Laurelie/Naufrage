@@ -31,8 +31,20 @@ public class Personnage{
   public int getEnergie(){
     return energie;
   }
+  public void modifierEnergie(int nb){
+    energie= energie+nb;
+    if(energie<=0){
+      System.out.println("Vous vous évanouissez à cause de la fatigue.");
+      /*Reste a definir ce que ca fait de s'evanouir*/
+  }
   public int getSante(){
     return sante;
+  }
+  public void modifierSante(int nb){
+    sante= sante+nb;
+    if(sante<=0){
+      System.out.println("Vous êtes mort.... GAME OVER");
+      /*arretez le jeu*/
   }
   public void ramasser(? extends Stockable objet){
     if (poidsInventaire+objet.getPoids() >= poidsMaxInventaire)
