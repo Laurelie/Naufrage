@@ -78,6 +78,7 @@ public class Personnage{
     if(direction.equals("Est")){
       x++;
     }
+    carte[x][y].genererAnimal();
   }
     
   public void fabriquer(){
