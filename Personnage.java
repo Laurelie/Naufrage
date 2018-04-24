@@ -5,6 +5,8 @@ public class Personnage{
   Scanner sc = new Scanner(System.in);
   /*private ArrayList<Lieu> carte = new ArrayList<Lieu>(); Je pense que si on fait une seule map il vaut mieux l'instancier comme ca:*/
   private Lieu[][] carte = Lieu[6][6];
+  private int x = 3;
+  private int y = 4;
   private String nom;
   /*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
   Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
@@ -57,6 +59,22 @@ public class Personnage{
   public ArrayList<? extends Stockage> getInventaire(){
     return inventaire;      
   }
+    
+  public void seDeplacer(String direction){
+    if(direction.equals("Nord")){
+      y--;
+    }
+    if(direction.equals("Sud")){
+      y++;
+    }
+    if(direction.equals("Ouest")){
+      x--;
+    }
+    if(direction.equals("Est")){
+      x++;
+    }
+  }
+    
   public void fabriquer(){
   
   }
