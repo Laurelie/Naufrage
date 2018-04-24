@@ -31,6 +31,9 @@ public class Personnage{
   public int getEnergie(){
     return energie;
   }
+  public Lieu[][] getCarte(){
+    return carte;
+  }
   public void modifierEnergie(int nb){
     energie= energie+nb;
     if(energie<=0){
