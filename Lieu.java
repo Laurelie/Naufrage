@@ -12,4 +12,7 @@ public class abstract Lieu{
   public Animaux getOccupant(){
     return(occupant);
   }
+  public String getNom(){
+    return nom;
+  }
 }
