@@ -5,8 +5,6 @@ public class Personnage{
   Scanner sc = new Scanner(System.in);
   /*private ArrayList<Lieu> carte = new ArrayList<Lieu>(); Je pense que si on fait une seule map il vaut mieux l'instancier comme ca:*/
   private Lieu[][] carte = Lieu[6][6];
-  private int x = 3;
-  private int y = 4;
   private String nom;
   /*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
   Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
@@ -48,6 +46,10 @@ public class Personnage{
       System.out.println("Vous êtes mort.... GAME OVER");
       /*arretez le jeu*/
   }
+  public void afficherstatut(){
+    System.out.println("Santé: "+santé+"\nEnergie: "+energie);
+  }
+    
   public void ramasser(? extends Stockable objet){
     if (poidsInventaire+objet.getPoids() >= poidsMaxInventaire)
       System.out.println("Vous ne pouvez pas stocker cet objet ("+objet.getPoids()+") : "+poidsInventaire+"/"+poidsMaxInventaire)
