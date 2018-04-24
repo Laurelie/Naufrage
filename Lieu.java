@@ -4,9 +4,12 @@ public class abstract Lieu{
   public Lieu(String nom){
     this.nom = nom;
   }
-  public abstract void recolte();
+  public abstract void choixAction();
   public abstract void genererAnimal();
   public void changerAnimal(Animal nouvelOccupant){
     occupant = nouvelOccupant;
+  }
+  public Animaux getOccupant(){
+    return(occupant);
   }
 }
