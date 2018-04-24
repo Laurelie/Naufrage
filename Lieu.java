@@ -3,6 +3,7 @@ public class abstract Lieu{
   private String nom;
   public Lieu(String nom){
     this.nom = nom;
+    occupant = null;
   }
   public abstract void choixAction();
   public abstract void genererAnimal();
