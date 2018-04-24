@@ -1,11 +1,18 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Personnage{
-  private ArrayList<Lieu> carte = new ArrayLsit<Lieu>();
+  Scanner sc = new Scanner(System.in);
+  /*private ArrayList<Lieu> carte = new ArrayList<Lieu>(); Je pense que si on fait une seule map il vaut mieux l'instancier comme ca:*/
+  private Lieu[][] carte = Lieu[6][6];
   private String nom;
-  private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
+  /*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
+  Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
+  private ArrayList<Arme> equipement = new ArrayList<Arme>();
+  private int nbEquipements=0;
+  equipement.add(new Poing());
   private int poidsIventaire; 
-  private final int poidsMaxInventaire;
+  private /*final*/ int poidsMaxInventaire;/*augmentable en craftant sac a dos?*/
   private int energie;
   private int sante;
   private int x;
@@ -45,7 +52,23 @@ public class Personnage{
     if (sante <= 100)
       sante += objet.estMange();
   }
-  public void combattre(){
+  public void combattre(Animal animal){
+    Arme armeUtilisee;
+    if(equipement[1]==null){
+      armeUtilisee = equipement[0];
+    }
+    else{
+      System.out.println("Quelle arme voulez vous utiliser?");
+      for(int i=1;i++;i<=nbEquipements){
+        System.out.println(i+") "+equipement[i].getNom());
+      }
+      int choix = sc.nextLine();
+      armeUtilisee = equipement[choix];
+    }
+    
+      
+      
+         
   
   }
   public void fuir(){
