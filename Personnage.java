@@ -79,6 +79,7 @@ public class Personnage{
       x++;
     }
     carte[x][y].genererAnimal();
+    carte[x][y].decrireLieu();
   }
     
   public void fabriquer(){
