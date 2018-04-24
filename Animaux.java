@@ -11,6 +11,9 @@ public class abstract Animaux implements mangeable{
   public int getSanté(){
     return santé;
   }
+  public void perdSanté(int nb){
+    santé=santé-nb;
+  }
   public int getPoids(){
     return poids;
   }
