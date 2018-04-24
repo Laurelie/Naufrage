@@ -52,9 +52,10 @@ public class Personnage{
     if (sante <= 100)
       sante += objet.estMange();
   }
-  public void combattre(Animal animal){
+  public void combattre(Animaux animal){
     Arme armeUtilisee;
     if(equipement[1]==null){
+      System.out.println("Vous n'avez pas d'arme, vous attaquez donc avec vos poings.");
       armeUtilisee = equipement[0];
     }
     else{
@@ -65,11 +66,18 @@ public class Personnage{
       int choix = sc.nextLine();
       armeUtilisee = equipement[choix];
     }
-    
-      
-      
-         
-  
+    if(Math.random()<armeUtilisee.getPrecision()){
+      animal.perdSanté(armeUtilisee.getDegat());
+      armeUtilisee.descriptionReussite();
+      if(animal.getSante()<=0){
+        animal.descriptionMort();
+        /*il faut alors ajouter l'animal a l'inventaire bouffe, mais est ce que les animaux ne font que de la nourriture???*/
+      }
+    }
+    else{
+      armeUtilisee.descriptionEchec();
+    }
+    animal.reagirAttaque(this);
   }
   public void fuir(){
   
