@@ -1,5 +1,5 @@
 public interface Chassable{
-  public void chasser( Personnage p);
-  public void partir(Personnage p);
-  public void apprivoiser(Personnage p, ? implements Mangeable aliment);
+  public void reagirAttaque( Personnage p);
+  public void reagirfuite(Personnage p);
+  /*public void reagirapprivoiser(Personnage p, ? implements Mangeable aliment);*/
 }
