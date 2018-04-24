@@ -22,8 +22,8 @@ public class Personnage{
     this.nom = nom;
     energie = 100;
     sante = 100;
-    x=0;
-    y=0;
+    x=1;
+    y=1;
   }
   public String getNom(){
     return nom;
