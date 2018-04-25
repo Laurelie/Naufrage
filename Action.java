@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Action{
      static Scanner sc = new Scanner(System.in);
      public static void agir(Personnage p){
-     	if(p.getSante() <=0)
+     	if(p.getSante() <=0)     //LAU : arreter des qu'il y a game over
      		return;
      	System.out.print("\n\tQue voulez-vous faire?\n\n");
           boolean nord = false;
@@ -92,11 +92,12 @@ public class Action{
                   p.manger();
                   commandeExecutee=true;
                }
+               /*
                if(str==6){
                   p.fabriquer();
                   commandeExecutee=true;
                }
-               /*
+               
                if(str==7){
                     p.afficherCarte();
                     commandeExecutee=true,
