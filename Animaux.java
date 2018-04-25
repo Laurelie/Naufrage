@@ -1,5 +1,4 @@
-public class abstract Animaux implements mangeable{
-  private int santé;
+public abstract class Animaux /*implements mangeable*/{
   private int poids;/* vu qu'on a un accesseur on peut le mettre private*/
   protected String nom;
   private int rapportAlimentaire;
@@ -8,17 +7,12 @@ public class abstract Animaux implements mangeable{
     this.nom = nom;
     this.rapportAlimentaire = rapportAlimentaire;/* en vrai on a pas besoin de rapport alimentaire si on a la fonction estMange() pour chaque animal*/
   }
-  public int getSanté(){
-    return santé;
-  }
-  public void perdSanté(int nb){
-    santé=santé-nb;
-  }
+  
   public int getPoids(){
     return poids;
   }
   public String toString(){
     return "C'est un "+nom+" de poids :"+poids+" qui équivault à "+rapportAlimentaire+" de rapportAlimentaire.";
   }
-  public abstract int estMange();
+  /*public abstract int estMange();*/
 }
