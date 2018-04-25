@@ -1,3 +1,4 @@
 public interface Mangeable{
-  public void estMange();
+  	public int estMange(Personnage p);
+  	public void estCuisine();
 }
