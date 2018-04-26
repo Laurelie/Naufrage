@@ -1,5 +1,5 @@
 public interface Fabricable{
-  public abstract Ressource[] listeMateriaux();
-  public abstract int[] quantiteMateriaux();
+  public abstract ArrayList<?> listeMateriaux();
+  public abstract ArrayList<Integer> quantiteMateriaux();
   public abstract String toString();
 }
