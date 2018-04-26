@@ -8,13 +8,11 @@ public class Personnage{
 	private String nom;
 	/*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
 	Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
-	private ArrayList<Arme> equipement = new ArrayList<Arme>(2);
+	private ArrayList<Arme implements Stockable> equipement = new ArrayList<Arme>(2);
 	private int nbEquipements;
 	private final ArrayList<? implements Fabricable> listeConstruction = new ArrayList<? implements Fabricable>();
-	private ArrayList<? implements Mangeable> aliments = new ArrayList<? implements Mangeable>();
-	private ArrayList<Integer> nbAliments = new ArrayList<Integer>();
-	private ArrayList<Ressource> ressourcesNonComestibles = new ArrayList<Ressource>();
-	private ArrayList<Integer> nbRessources = new ArrayList<Integer>();
+	private ArrayList<? implements Mangeable implements Stockable> aliments = new ArrayList<? implements Mangeable>();
+	private ArrayList<Ressource implements Stockable> ressourcesNonComestibles = new ArrayList<Ressource>();
 	private int poidsInventaire; 
 	private /*final*/ int poidsMaxInventaire;/*augmentable en craftant sac a dos?*/
 	private int energie;
@@ -75,23 +73,56 @@ public class Personnage{
 	public void afficherInventaire(ArrayList<?> liste){ //LAU
 		System.out.println("Voici votre inventaire :\n");
 		for(int i=0; i<liste.size();i++){
-			System.out.println((i+1)+") "+liste.get(i));//Attention ici tu vas juste afficher l'adresse de l'objet si c'est pas un type de base
+			System.out.println((i+1)+") "+(liste.get(i)).toString());
 		}
 		System.out.println("");
 	}
-    
-  public void ramasser(? extends Stockable objet){
+  public void jeterObjet(int i, int quantite, ArrayList<? implements Stockable> liste){
+	  if(i<liste.size()){
+		  if((liste.get(i)).getquantite()<quantite){
+			  System.out.println("Vous avez moins de "+ quantite +" "+(liste.get(i)).toString());
+		  }
+		  if((liste.get(i)).getquantite()==quantite){
+			  liste.remove(i);
+		  }
+		  else{
+			  (liste.get(i)).modifierQuantite(-quantite);
+		  }
+	  }
+  }
+			  
+		  
+  public void ramasser(? implements Stockable objet){
     	if (poidsInventaire+objet.getPoids() >= poidsMaxInventaire)
       		System.out.println("Vous ne pouvez pas stocker cet objet ("+objet.getPoids()+") : "+poidsInventaire+"/"+poidsMaxInventaire)
     	else{
-      		inventaire.add(objet);
       		poidsInventaire += objet.getPoids();
-    	}
-  	}
-  	public ArrayList<? extends Stockage> getInventaire(){
-    	return inventaire;      
-  	}
-    
+	if (objet instance of Mangeable){
+		for(int i =0; i<aliments.size();i++){
+			if(((aliments.get(i)).toString()).equals(objet.toString())){
+				nbAliments[i]++;
+				return;
+			}
+		}
+		aliments.add(objet);
+		nbAliments.add(1);
+	}
+	if (objet instance of Ressources){
+		for(int i =0; i<ressourcesNonComestibles.size();i++){
+			if(((ressourcesNonComestibles.get(i)).toString()).equals(objet.toString())){
+				nbRessources[i]++;
+				return;
+			}
+		}
+		ressourcesNonComestibles.add(objet);
+		nbRessources.add(1);
+	}
+	if (objet instance of Arme){
+		equipement.add(objet);
+	}
+	}
+  }
+	
   	public void seDeplacer(String direction){
     	if(direction.equals("Nord")){
       		y--;
