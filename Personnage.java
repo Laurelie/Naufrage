@@ -10,7 +10,7 @@ public class Personnage{
 	Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
 	private ArrayList<Arme implements Stockable> equipement = new ArrayList<Arme>(2);
 	private int nbEquipements;
-	private final ArrayList<? implements Fabricable> listeConstruction = new ArrayList<? implements Fabricable>();
+	private final ArrayList<? implements Fabricable> listeFabrication = new ArrayList<? implements Fabricable>();
 	private ArrayList<? implements Mangeable implements Stockable> aliments = new ArrayList<? implements Mangeable>();
 	private ArrayList<Ressource> ressourcesNonComestibles = new ArrayList<Ressource>();
 	private int poidsInventaire; 
