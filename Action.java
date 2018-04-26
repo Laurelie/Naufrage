@@ -21,13 +21,13 @@ public class Action{
                     p.fuir();
                     int alea = (int)(Math.random()*5);
                     if(alea==0)
-                 		x++;
+                 		p.seDeplacer("Nord");
                  	else if(alea==1)
-                 		x--;
+                 		p.seDeplacer("Sud");
                  	else if(alea==2)
-                 		y++;
+                 		p.seDeplacer("Ouest");
                  	else if(alea==3)
-                 		y--;
+                 		p.seDeplacer("Est");
                     //faire bouger avec les cas hors du terrains
                }
                if(str==2){
