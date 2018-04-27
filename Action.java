@@ -4,7 +4,7 @@ public class Action{
      public static void agir(Personnage p){
      	if(p.getSante() <=0)     //LAU : arreter des qu'il y a game over
      		return;
-     	System.out.print("\n\tQue voulez-vous faire?\n\n");
+     	System.out.println("\n\tQue voulez-vous faire?\n\n");
           boolean nord = false;
           boolean sud = false;
           boolean est = false;
