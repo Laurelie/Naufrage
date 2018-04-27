@@ -94,16 +94,56 @@ public class Personnage{
 	public void consulterInventaire(){
 		System.out.println("Que voulez vous consulter? \n 1) Besace à nouriture \n 2) Sacoche à ressources \n 3) Equipement \n 4) Constructions ");
 		int str = Integer.parseInt(sc.nextLine());
+		while(str<0 || str>4){
+			System.out.println("Commande invalide");
+			System.out.println("Que voulez vous consulter? \n 1) Besace à nouriture \n 2) Sacoche à ressources \n 3) Equipement \n 4) Constructions ");
+			str = Integer.parseInt(sc.nextLine());
+		}
 		if(str == 1){
+			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
 			afficherListe(aliments);
+			str = Integer.parseInt(sc.nextLine());
+			while(str<0 || str>=aliments.size()){
+				System.out.println("Commande invalide");
+				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+				str = Integer.parseInt(sc.nextLine());
+			}
+			System.out.println("Combien voulez vous en jeter?");
+			int quantite = Integer.parseInt(sc.nextLine());
+			jeterObjet(str-1,quantite,aliments);
+			return;
+		}
 		}
 		if(str == 2){
+			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
 			afficherListe(ressourcesNonComestibles);
+			str = Integer.parseInt(sc.nextLine());
+			while(str<0 || str>=ressourcesNonComestibles.size()){
+				System.out.println("Commande invalide");
+				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+				str = Integer.parseInt(sc.nextLine());
+			}
+			System.out.println("Combien voulez vous en jeter?");
+			int quantite = Integer.parseInt(sc.nextLine());
+			jeterObjet(str-1,quantite,ressourcesNonComestibles);
+			return;
 		}
 		if(str == 3){
+			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
 			afficherListe(equipement);
+			str = Integer.parseInt(sc.nextLine());
+			while(str<0 || str>=aliments.size()){
+				System.out.println("Commande invalide");
+				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+				str = Integer.parseInt(sc.nextLine());
+			}
+			jeterObjet(1,quantite,equipement);
+			return;
 		}
 		if(str == 4){
+			afficherListe(constructions);
+		}
+}
 			
   public void jeterObjet(int i, int quantite, ArrayList<? implements Stockable> liste){
 	  if(i<liste.size()){
