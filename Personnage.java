@@ -195,18 +195,30 @@ public class Personnage{
 		System.out.println("Que voulez vous fabriquer?");
 		for(int i = 0; i<listeFabrication.size(); i++){
 			System.out.println((i+1)"- "+(listeFabrication.get(i)).toString())
-			p.afficherListe(listeFabrication.get(i).listeMateriaux());
+			this.afficherListe(listeFabrication.get(i).listeMateriaux());
 		}
 		int str = Integer.parseInt(sc.nextLine());
 		if(!(listeFabrication.get(i)).estFabricable()){
 			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.")
 		}
 		else{
-			
-		
-			
-					
-					
+			if(listeFabrication.get(str) instance of Construction){
+				
+			}
+			else{
+				this.ramasser(listeFabrication.get(i));
+			}
+			for(int i=0;i<((listeFabrication.get(i)).listeMateriaux()).lenght();i++){
+				for(int j = 0; j<aliments.size(); j++){
+					if( (aliments.get(j)).toString()==(((listeFabrication.get(i)).listeMateriaux()).get(i)).toString())){
+						this.jeterObjet(j,(listeFabrication.get(i)).listeMateriaux().getQuantite(),aliments);
+				}
+				for(int k = 0; k<ressourcesNonComestibles.size(); k++){
+					if( (ressourcesNonComestibles.get(k)).toString()==(((listeFabrication.get(i)).listeMateriaux()).get(i)).toString()))){
+						this.jeterObjet(j,(listeFabrication.get(i)).listeMateriaux().getQuantite(),aliments);
+				}
+			}
+		}						
   	}
   
   	public void manger(){ //LAU
