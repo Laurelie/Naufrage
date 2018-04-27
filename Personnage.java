@@ -9,7 +9,6 @@ public class Personnage{
 	/*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
 	Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
 	private ArrayList<Arme implements Stockable> equipement = new ArrayList<Arme>(2);
-	private int nbEquipements;
 	private final ArrayList<? implements Fabricable> listeFabrication = new ArrayList<? implements Fabricable>();
 	private ArrayList<? implements Mangeable implements Stockable> aliments = new ArrayList<? implements Mangeable>();
 	private ArrayList<Ressource> ressourcesNonComestibles = new ArrayList<Ressource>();
@@ -70,13 +69,42 @@ public class Personnage{
 	public void afficherStatut(){ //LAU
 		System.out.println("Vous êtes "+nom+"\nSanté: "+sante+"\nEnergie: "+energie+"\nVous avez "+nbEquipements+" équipements");
 	}
-	public void afficherInventaire(ArrayList<?> liste){ //LAU
+	public void afficherCarte(){
+		String ligne;
+		for(int i=0;i<carte.lenght();i++){
+			ligne = "";
+			for(int j = 0;j<carte[i].lenght;j++){
+				ligne+= "  " +(carte[i][j]).getSymbole();
+			}
+			System.out.println(ligne);
+		}
+		System.out.println("Montagne = Mo");
+		System.out.println("Foret = Fo");
+		System.out.println("Mer = Me");
+		System.out.println("Plage = Pl");
+	}
+	public void afficherListe(ArrayList<?> liste){ //LAU
 		System.out.println("Voici votre inventaire :\n");
 		for(int i=0; i<liste.size();i++){
-			System.out.println((i+1)+") "+(liste.get(i)).toString());
+			System.out.println((i+1)+") "+(liste.get(i)).toString())+ "  x "+(liste.get(i)).getQuantite());
 		}
 		System.out.println("");
 	}
+	
+	public void consulterInventaire(){
+		System.out.println("Que voulez vous consulter? \n 1) Besace à nouriture \n 2) Sacoche à ressources \n 3) Equipement \n 4) Constructions ");
+		int str = Integer.parseInt(sc.nextLine());
+		if(str == 1){
+			afficherListe(aliments);
+		}
+		if(str == 2){
+			afficherListe(ressourcesNonComestibles);
+		}
+		if(str == 3){
+			afficherListe(equipement);
+		}
+		if(str == 4){
+			
   public void jeterObjet(int i, int quantite, ArrayList<? implements Stockable> liste){
 	  if(i<liste.size()){
 		  if((liste.get(i)).getquantite()<quantite){
@@ -88,9 +116,12 @@ public class Personnage{
 		  else{
 			  (liste.get(i)).modifierQuantite(-quantite);
 		  }
+		  poidsInventaire =- quantite*((liste.get(i)).getPoids());
 	  }
   }
-			  
+
+  public void jeter(){
+	  
 		  
   public void ramasser(? implements Stockable objet){
     	if (poidsInventaire+objet.getPoids() >= poidsMaxInventaire)
@@ -161,11 +192,17 @@ public class Personnage{
 			
 			
  	public void fabriquer(){ //afficher les objets que l'on peut fabriquer et les matériaux à avoir pour le faire ? YEP
-		
+		System.out.println("Que voulez vous fabriquer?");
 		for(int i = 0; i<listeFabrication.size(); i++){
-			System.out.println(i+") "+(listeFabrication.get(i)).toString());
+			System.out.println((i+1)"- "+(listeFabrication.get(i)).toString())
+			p.afficherListe(listeFabrication.get(i).listeMateriaux());
 		}
 		int str = Integer.parseInt(sc.nextLine());
+		if(!(listeFabrication.get(i)).estFabricable()){
+			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.")
+		}
+		else{
+			
 		
 			
 					
@@ -198,7 +235,7 @@ public class Personnage{
 	      	System.out.println("Quelle arme voulez vous utiliser?");
 	      	this.afficherInventaire(equipement);
 	      	int str = Integer.parseInt(sc.nextLine());
-	      	while( str < 0 || str > aliments.size()){
+	      	while( str < 0 || str > equipement.size()){
 	    		System.out.println("Mauvaise séléction. Recommencez.");
 	    		str = Integer.parseInt(sc.nextLine());
 	    	}
@@ -209,21 +246,13 @@ public class Personnage{
 	      	armeUtilisee.descriptionReussite();
 	      	if((carte[x][y].getOccupant()).getSante()<=0){
 	        	(carte[x][y].getOccupant()).descriptionMort();
-	        	//ramassage automatique
-	        	if((carte[x][y].getOccupant()).getPoids() + poidsInventaire <= poidsMaxInventaire){
-	        		System.out.println("Vous ramassez "+(carte[x][y].getOccupant()).toString());
-	        		aliments.add(carte[x][y].getOccupant());
-	        		poidsInventaire += (carte[x][y].getOccupant()).getPoids();
-	        	}
-	        	else
-	        		System.out.println("Vous n'avez plus de place dans votre sac à aliments pour ramassez :"+carte[x][y].getOccupant());
-	        	/*il faut alors ajouter l'animal a l'inventaire bouffe, mais est ce que les animaux ne font que de la nourriture???*/
-	        	carte[x][y].changerAnimal(null); //animal mort : plus sur la case
-	    }
+	        	p.ramasser(carte[x][y].getOccupant());
+	        	(carte[x][y].getOccupant()) == null;
+		}
 	}
     	else
       		armeUtilisee.descriptionEchec();
-    	if (carte[x][y].getOccupant() != null) //ajout de possibilité mort donc plus sur la case
+    	if (carte[x][y].getOccupant() != null){ //ajout de possibilité mort donc plus sur la case
     		(carte[x][y].getOccupant()).reagirAttaque(this);
 	}
 
