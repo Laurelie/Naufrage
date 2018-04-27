@@ -67,7 +67,7 @@ public class Personnage{
 	    	System.out.println("\nVous êtes mort.... GAME OVER\n");}
 	}
 	public void afficherStatut(){ //LAU
-		System.out.println("Vous êtes "+nom+"\nSanté: "+sante+"\nEnergie: "+energie+"\nVous avez "+nbEquipements+" équipements");
+		System.out.println("Vous êtes "+nom+"\nSanté: "+sante+"\nEnergie: "+energie+"\nVous portez "+poidsInventaire+" pds /" poidsMaxInventaire "pds");
 	}
 	public void afficherCarte(){
 		String ligne;
