@@ -1,4 +1,4 @@
 public interface Fabricable{
-  public abstract ArrayList<?> listeMateriaux();
+  public abstract ArrayList<? extends Stockable> listeMateriaux();
   public abstract String toString();
 }
