@@ -11,7 +11,7 @@ public class Personnage{
 	private ArrayList<Arme implements Stockable> equipement = new ArrayList<Arme>(2);
 	private final ArrayList<? implements Fabricable> listeFabrication = new ArrayList<? implements Fabricable>();
 	private ArrayList<? implements Mangeable implements Stockable> aliments = new ArrayList<? implements Mangeable>();
-	private ArrayList<Ressource> ressourcesNonComestibles = new ArrayList<Ressource>();
+	private ArrayList<? implements Stockable> ressourcesNonComestibles = new ArrayList<Ressource>();
 	private int poidsInventaire; 
 	private /*final*/ int poidsMaxInventaire;/*augmentable en craftant sac a dos?*/
 	private int energie;
