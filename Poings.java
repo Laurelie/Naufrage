@@ -8,4 +8,10 @@ public class Poings extends Arme{
   public void descriptionReussite(){
     System.out.println("Vous assènez un sévère coup de poing à l'animal qui prend une blessure.");
     }
+  public int getPoids() {
+	  return 0;
+  }
+  public Stockable clone() {
+	  return new Poings();
+  }
 }

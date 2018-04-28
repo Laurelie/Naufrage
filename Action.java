@@ -88,11 +88,10 @@ public class Action{
                   p.seDeplacer("Ouest");
                   commandeExecutee=true;
                }
-               if(str==5){
+               /*if(str==5){
                   p.manger();
                   commandeExecutee=true;
-               }
-               /*
+               }*/
                if(str==6){
                   p.fabriquer();
                   commandeExecutee=true;
@@ -100,21 +99,19 @@ public class Action{
                
                if(str==7){
                     p.afficherCarte();
-                    commandeExecutee=true,
+                    commandeExecutee=true;
                }
-               */
                if(str==8){
                     p.afficherStatut();
                     commandeExecutee=true;
                }
-               /*
                if(str==9){
-                    p.afficherInventaire;
-                    commandeExecutee=true,
+                    p.consulterInventaire();
+                    commandeExecutee=true;
                }
-               if(str==10){
+               /*if(str==10){
                     position.choixAction();
-                    commandeExecutee=true,
+                    commandeExecutee=true;
                }
                */
                if(!commandeExecutee){

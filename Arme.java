@@ -1,4 +1,4 @@
-public abstract class Arme{
+public abstract class Arme implements Stockable{
   private String nom;
   private int degat;
   private double precision;
@@ -16,6 +16,14 @@ public abstract class Arme{
   public int getDegat(){
     return(degat);
   }
+  public int getQuantite() {
+	  return 1;
+  }
+  public void modifierQuantite(int n) {}
   public abstract void descriptionEchec();
   public abstract void descriptionReussite();
+  public abstract Stockable clone();
+  public String toString() {
+	  return nom;
+  }
 }

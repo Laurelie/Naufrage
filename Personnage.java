@@ -8,10 +8,10 @@ public class Personnage{
 	private String nom;
 	/*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
 	Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
-	private ArrayList<Arme implements Stockable> equipement = new ArrayList<Arme>(2);
-	private final ArrayList<? implements Fabricable> listeFabrication = new ArrayList<? implements Fabricable>();
-	private ArrayList<? implements Mangeable implements Stockable> aliments = new ArrayList<? implements Mangeable>();
-	private ArrayList<? implements Stockable> ressourcesNonComestibles = new ArrayList<Ressource>();
+	private ArrayList<Stockable> equipement = new ArrayList<Stockable>(2);
+	private final ArrayList<Fabricable> listeFabrication = new ArrayList<Fabricable>();
+	private ArrayList<Stockable> aliments = new ArrayList<Stockable>();
+	private ArrayList<Stockable> ressourcesNonComestibles = new ArrayList<Stockable>();
 	private int poidsInventaire; 
 	private /*final*/ int poidsMaxInventaire;/*augmentable en craftant sac a dos?*/
 	private int energie;
@@ -21,7 +21,7 @@ public class Personnage{
 	public Personnage(String nom){
 	Poings p = new Poings();
 	equipement.add(p);
-	equipement.add(null);
+	listeFabrication.add(new Lance());
 	for(int i=0;i<6;i++) {
 		for(int j=0;j<6;j++) {
 			carte[i][j] = new Foret();
@@ -32,9 +32,8 @@ public class Personnage{
     	sante = 100;
     	x=1;
     	y=1;
-    	nbEquipements=0;
     	poidsInventaire =0;
-    	poidsMaxInventaire=50;
+    	poidsMaxInventaire=1500;
 	}
 	public int getX() {
 	 	return x;
@@ -67,13 +66,13 @@ public class Personnage{
 	    	System.out.println("\nVous êtes mort.... GAME OVER\n");}
 	}
 	public void afficherStatut(){ //LAU
-		System.out.println("Vous êtes "+nom+"\nSanté: "+sante+"\nEnergie: "+energie+"\nVous portez "+poidsInventaire+" pds /" poidsMaxInventaire "pds");
+		System.out.println("Vous êtes "+nom+"\nSanté: "+sante+"\nEnergie: "+energie+"\nVous portez "+poidsInventaire+" pds /" +poidsMaxInventaire+ "pds");
 	}
 	public void afficherCarte(){
 		String ligne;
-		for(int i=0;i<carte.lenght();i++){
+		for(int i=0;i<carte.length;i++){
 			ligne = "";
-			for(int j = 0;j<carte[i].lenght;j++){
+			for(int j = 0;j<carte[i].length;j++){
 				ligne+= "  " +(carte[i][j]).getSymbole();
 			}
 			System.out.println(ligne);
@@ -83,10 +82,11 @@ public class Personnage{
 		System.out.println("Mer = Me");
 		System.out.println("Plage = Pl");
 	}
-	public void afficherListe(ArrayList<?> liste){ //LAU
-		System.out.println("Voici votre inventaire :\n");
+	public void afficherListe(ArrayList<Stockable> liste){ //LAU
 		for(int i=0; i<liste.size();i++){
-			System.out.println((i+1)+") "+(liste.get(i)).toString())+ "  x "+(liste.get(i)).getQuantite());
+			if(liste.get(i)!=null) {
+				System.out.println((i+1)+") "+(liste.get(i)).toString()+ "  x "+(liste.get(i)).getQuantite());
+			}
 		}
 		System.out.println("");
 	}
@@ -100,57 +100,59 @@ public class Personnage{
 			str = Integer.parseInt(sc.nextLine());
 		}
 		if(str == 1){
-			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
-			afficherListe(aliments);
+			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.");
+			this.afficherListe(aliments);
 			str = Integer.parseInt(sc.nextLine());
-			while(str<0 || str>=aliments.size()){
+			while(str<0 || str>aliments.size()){
 				System.out.println("Commande invalide");
-				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.");
 				str = Integer.parseInt(sc.nextLine());
 			}
+			if (str==0) return;
 			System.out.println("Combien voulez vous en jeter?");
 			int quantite = Integer.parseInt(sc.nextLine());
-			jeterObjet(str-1,quantite,aliments);
+			this.jeterObjet(str-1,quantite,aliments);
 			return;
 		}
-		}
 		if(str == 2){
-			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.");
 			afficherListe(ressourcesNonComestibles);
 			str = Integer.parseInt(sc.nextLine());
-			while(str<0 || str>=ressourcesNonComestibles.size()){
+			while(str<0 || str>ressourcesNonComestibles.size()){
 				System.out.println("Commande invalide");
-				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.");
 				str = Integer.parseInt(sc.nextLine());
 			}
+			if(str==0) return;
 			System.out.println("Combien voulez vous en jeter?");
 			int quantite = Integer.parseInt(sc.nextLine());
 			jeterObjet(str-1,quantite,ressourcesNonComestibles);
 			return;
 		}
 		if(str == 3){
-			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
-			afficherListe(equipement);
+			System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.");
+			this.afficherListe(equipement);
 			str = Integer.parseInt(sc.nextLine());
-			while(str<0 || str>=aliments.size()){
+			while(str<0 || str>equipement.size()){
 				System.out.println("Commande invalide");
-				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.")
+				System.out.println("Sélectionner un élément pour le jeter, sélectionner 0) pour ne rien jeter.");
 				str = Integer.parseInt(sc.nextLine());
 			}
-			jeterObjet(1,quantite,equipement);
+			if(str == 0) return;
+			jeterObjet(str-1,1,equipement);
 			return;
 		}
-		if(str == 4){
+		/*if(str == 4){
 			afficherListe(constructions);
-		}
+		}*/
 }
 			
-  public void jeterObjet(int i, int quantite, ArrayList<? implements Stockable> liste){
+  public void jeterObjet(int i, int quantite, ArrayList<Stockable> liste){
 	  if(i<liste.size()){
-		  if((liste.get(i)).getquantite()<quantite){
+		  if((liste.get(i)).getQuantite()<quantite){
 			  System.out.println("Vous avez moins de "+ quantite +" "+(liste.get(i)).toString());
 		  }
-		  if((liste.get(i)).getquantite()==quantite){
+		  if((liste.get(i)).getQuantite()==quantite){
 			  liste.remove(i);
 		  }
 		  else{
@@ -160,37 +162,35 @@ public class Personnage{
 	  }
   }
 
-  public void jeter(){
 	  
 		  
-  public void ramasser(? implements Stockable objet){
+  public void ramasser(Stockable objet){
     	if (poidsInventaire+objet.getPoids() >= poidsMaxInventaire)
-      		System.out.println("Vous ne pouvez pas stocker cet objet ("+objet.getPoids()+") : "+poidsInventaire+"/"+poidsMaxInventaire)
+      		System.out.println("Vous ne pouvez pas stocker cet objet (il p�se: "+objet.getPoids()+") et vous portez deja :"+poidsInventaire+"/"+poidsMaxInventaire);
     	else{
       		poidsInventaire += objet.getPoids();
-	if (objet instance of Mangeable){
+	if (objet instanceof Mangeable){
 		for(int i =0; i<aliments.size();i++){
 			if(((aliments.get(i)).toString()).equals(objet.toString())){
-				nbAliments[i]++;
+				(aliments.get(i)).modifierQuantite(objet.getQuantite());
 				return;
 			}
 		}
-		aliments.add(objet);
-		nbAliments.add(1);
+		aliments.add((Mangeable)objet);
+		return;
 	}
-	if (objet instance of Ressources){
-		for(int i =0; i<ressourcesNonComestibles.size();i++){
-			if(((ressourcesNonComestibles.get(i)).toString()).equals(objet.toString())){
-				nbRessources[i]++;
-				return;
-			}
+
+	if (objet instanceof Arme){
+		equipement.add((Arme)objet);
+		return;
+	}
+	for(int i =0; i<ressourcesNonComestibles.size();i++){
+		if(((ressourcesNonComestibles.get(i)).toString()).equals(objet.toString())){
+			ressourcesNonComestibles.get(i).modifierQuantite(objet.getQuantite());;
+			return;
 		}
-		ressourcesNonComestibles.add(objet);
-		nbRessources.add(1);
 	}
-	if (objet instance of Arme){
-		equipement.add(objet);
-	}
+	ressourcesNonComestibles.add(objet);
 	}
   }
 	
@@ -210,17 +210,19 @@ public class Personnage{
 	    carte[x][y].decrireLieu();
 	    carte[x][y].genererAnimal();
   	}
-    	public boolean estFabricable(objet implements Fabricable){
+    public boolean estFabricable(Fabricable objet){
 		boolean estFabricable = false;
-		for(int i=0;i<(objet.listeMateriaux()).lenght();i++){
+		for(int i=0;i<(objet.listeMateriaux()).size();i++){
 			for(int j = 0; j<aliments.size(); j++){
-				if( (aliments.get(j)).toString()==((objet.listeMateriaux()).get(i)).toString() && nbAliments[j]>=(objet.quantiteMateriaux()).get(i)){
+				if( (aliments.get(j)).toString()==((objet.listeMateriaux()).get(i)).toString() && aliments.get(j).getQuantite()>=(objet.listeMateriaux()).get(i).getQuantite()){
 					estFabricable = true;
 				}
+			}
 			for(int k = 0; k<ressourcesNonComestibles.size(); k++){
-				if( (ressourcesNonComestibles.get(k)).toString()==((objet.listeMateriaux()).get(i)).toString() && nbRessources[k]>=(objet.quantiteMateriaux()).get(i)){
+				if( (ressourcesNonComestibles.get(k)).toString()==((objet.listeMateriaux()).get(i)).toString() && ressourcesNonComestibles.get(k).getQuantite()>=(objet.listeMateriaux()).get(i).getQuantite()){
 					estFabricable = true;
 				}
+			}
 			if(! estFabricable){
 				return false;
 			}
@@ -228,40 +230,44 @@ public class Personnage{
 		}
 		return(true);
 	}
+
+	
 				
 			
 			
  	public void fabriquer(){ //afficher les objets que l'on peut fabriquer et les matériaux à avoir pour le faire ? YEP
 		System.out.println("Que voulez vous fabriquer?");
 		for(int i = 0; i<listeFabrication.size(); i++){
-			System.out.println((i+1)"- "+(listeFabrication.get(i)).toString())
+			System.out.println((i+1)+"- "+(listeFabrication.get(i)).toString());
 			this.afficherListe(listeFabrication.get(i).listeMateriaux());
 		}
 		int str = Integer.parseInt(sc.nextLine());
-		if(!(listeFabrication.get(i)).estFabricable()){
-			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.")
+		if(!this.estFabricable(listeFabrication.get(str-1))){
+			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.");
 		}
 		else{
-			if(listeFabrication.get(str) instance of Construction){
+			/*if(listeFabrication.get(str) instanceof Construction){
 				
-			}
-			else{
-				this.ramasser(listeFabrication.get(i));
-			}
-			for(int i=0;i<((listeFabrication.get(i)).listeMateriaux()).lenght();i++){
+			}*/
+			/*else{*/
+				this.ramasser(listeFabrication.get(str-1).clone());
+			/*}*/
+			for(int i=0;i<((listeFabrication.get(str-1)).listeMateriaux()).size();i++){
 				for(int j = 0; j<aliments.size(); j++){
-					if( (aliments.get(j)).toString()==(((listeFabrication.get(i)).listeMateriaux()).get(i)).toString())){
-						this.jeterObjet(j,(listeFabrication.get(i)).listeMateriaux().getQuantite(),aliments);
+					if( (aliments.get(j)).toString()==(((listeFabrication.get(str-1)).listeMateriaux()).get(i)).toString()){
+						this.jeterObjet(j,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),aliments);
 				}
 				for(int k = 0; k<ressourcesNonComestibles.size(); k++){
-					if( (ressourcesNonComestibles.get(k)).toString()==(((listeFabrication.get(i)).listeMateriaux()).get(i)).toString()))){
-						this.jeterObjet(j,(listeFabrication.get(i)).listeMateriaux().getQuantite(),aliments);
+					if( (ressourcesNonComestibles.get(k)).toString()==(((listeFabrication.get(str-1)).listeMateriaux()).get(i)).toString()){
+						this.jeterObjet(k,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),ressourcesNonComestibles);
+				}
+				}
 				}
 			}
-		}						
+		}
   	}
   
-  	public void manger(){ //LAU
+  	/*public void manger(){ //LAU
 	  	if (aliments.isEmpty())
 	  		System.out.println("Vous n'avez rien à manger.");
 	    else{
@@ -276,36 +282,37 @@ public class Personnage{
 	      		sante += (aliments.get(str-1)).estMange(this); //le choix commence à 1
 	      	}
 	    }
- 	}
+ 	}*/
   	public void combattre(){
 	    Arme armeUtilisee;
-	    if(equipement.get(1)==null){
+	    if(equipement.size()==1){
 	      System.out.println("Vous n'avez pas d'arme, vous attaquez donc avec vos poings.");
-	      armeUtilisee = equipement.get(0);
+	      armeUtilisee = (Arme) equipement.get(0);
 	    }
 	    else{
 	      	System.out.println("Quelle arme voulez vous utiliser?");
-	      	this.afficherInventaire(equipement);
+	      	this.afficherListe(equipement);
 	      	int str = Integer.parseInt(sc.nextLine());
 	      	while( str < 0 || str > equipement.size()){
 	    		System.out.println("Mauvaise séléction. Recommencez.");
 	    		str = Integer.parseInt(sc.nextLine());
 	    	}
-	      	armeUtilisee = equipement.get(str-1); //le choix commence à 1
+	      	armeUtilisee = (Arme) equipement.get(str-1); //le choix commence à 1
 	    }
 	    if((Math.random())<(armeUtilisee.getPrecision())){
 	    	(carte[x][y].getOccupant()).perdSante(armeUtilisee.getDegat());
 	      	armeUtilisee.descriptionReussite();
 	      	if((carte[x][y].getOccupant()).getSante()<=0){
 	        	(carte[x][y].getOccupant()).descriptionMort();
-	        	p.ramasser(carte[x][y].getOccupant());
-	        	(carte[x][y].getOccupant()) == null;
+	        	this.ramasser(carte[x][y].getOccupant());
+	        	(carte[x][y]).changerAnimal(null);
 		}
 	}
     	else
       		armeUtilisee.descriptionEchec();
     	if (carte[x][y].getOccupant() != null){ //ajout de possibilité mort donc plus sur la case
     		(carte[x][y].getOccupant()).reagirAttaque(this);
+    	}
 	}
 
 	public void fuir(){ //LAU
