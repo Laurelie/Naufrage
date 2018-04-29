@@ -13,22 +13,22 @@ public abstract class Animaux implements Mangeable{
 		this.cru = cru;
 		quantite = 1;
 	}
-	public void setRapportAlimentaire(int rapportAlimentaire){ //LAU
+	public void setRapportAlimentaire(int rapportAlimentaire){ 
 		rapportAlimentaire = this.rapportAlimentaire;
 	}
-	public void setVivant(boolean vivant){ //LAU
+	public void setVivant(boolean vivant){ 
 		this.vivant = vivant;
 	}
-	public boolean getVivant(){ //LAU
+	public boolean getVivant(){ 
 		return vivant;
 	}
-	public void setCru(boolean cru){ //LAU
+	public void setCru(boolean cru){ 
 		this.cru = cru;
 	}
-	public int getPoids(){ //LAU
+	public int getPoids(){ 
 	  	return poids;
 	}
-	public String desc(){ //LAU
+	public String desc(){ 
 	  	String txt = nom+" de poids :"+poids+" qui équivault à "+rapportAlimentaire+" de rapportAlimentaire. Cet animal est ";
 	  	if(vivant)
 	    	return txt+"vivant";
@@ -40,7 +40,7 @@ public abstract class Animaux implements Mangeable{
 	public String toString() {
 		return nom;
 	}
-	public int estMange(Personnage p){ //LAU
+	public int estMange(Personnage p){ 
 		if (cru){
 	    	System.out.println("Vous mangez un "+nom+" cru : -"+rapportAlimentaire+" de santé");
 	    	return 0-rapportAlimentaire;
@@ -50,7 +50,7 @@ public abstract class Animaux implements Mangeable{
 	    	return rapportAlimentaire;
 	  	}
 	}
-	public void estCuisine(){ //LAU
+	public void estCuisine(){ 
 	  	if (!vivant){ //vivant == False
 	    	cru = false;
 	  	}

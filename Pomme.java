@@ -1,3 +1,3 @@
-public class Pomme extends Fruits{
+/*public class Pomme extends Fruits{
 
-}
+}*/

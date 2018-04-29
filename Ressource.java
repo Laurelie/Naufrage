@@ -1,4 +1,3 @@
-
 public abstract class Ressource implements Stockable{
 	private int quantite;
 	private String nom;

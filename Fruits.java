@@ -1,3 +1,3 @@
-public class abstract Fruits implemens Mangeable{
+/*public class abstract Fruits implemens Mangeable{
   
-}
+}*/

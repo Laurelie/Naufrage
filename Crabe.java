@@ -1,3 +1,3 @@
-public class Crabe extends Animaux implement Mangeable{
+/*public class Crabe extends Animaux implement Mangeable{
 
-}
+}*/
