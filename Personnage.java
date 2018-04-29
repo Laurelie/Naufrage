@@ -16,15 +16,23 @@ public class Personnage{
 	private /*final*/ int poidsMaxInventaire;/*augmentable en craftant sac a dos?*/
 	private int energie;
 	private int sante;
+	private int date = 1;
+	private final int nbMaxCamps = 2;
 	private int x;
 	private int y;
 	public Personnage(String nom){
 	Poings p = new Poings();
 	equipement.add(p);
 	listeFabrication.add(new Lance());
+	listeFabrication.add(new Camp());
 	for(int i=0;i<6;i++) {
 		for(int j=0;j<6;j++) {
-			carte[i][j] = new Foret();
+			if(i==0 || i==5 || j==0 || j==5) {
+				carte[i][j]= new Mer();
+			}
+			else {
+				carte[i][j] = new Foret();
+			}
 		}
 	}
     	this.nom = nom;
@@ -73,7 +81,17 @@ public class Personnage{
 		for(int i=0;i<carte.length;i++){
 			ligne = "";
 			for(int j = 0;j<carte[i].length;j++){
-				ligne+= "  " +(carte[i][j]).getSymbole();
+				if(x==i && y==j) {
+					ligne+= "  X";
+				}
+				else {
+					if(carte[i][j].getConstructions().size()!=0) {
+						ligne+= "  Ca";
+					}
+					else {
+						ligne+= "  " +(carte[i][j]).getSymbole();
+					}
+				}
 			}
 			System.out.println(ligne);
 		}
@@ -81,6 +99,8 @@ public class Personnage{
 		System.out.println("Foret = Fo");
 		System.out.println("Mer = Me");
 		System.out.println("Plage = Pl");
+		System.out.println("Votre position = X");
+		System.out.println("Camp = Ca");
 	}
 	public void afficherListe(ArrayList<Stockable> liste){ //LAU
 		for(int i=0; i<liste.size();i++){
@@ -161,9 +181,7 @@ public class Personnage{
 		  poidsInventaire =- quantite*((liste.get(i)).getPoids());
 	  }
   }
-
 	  
-		  
   public void ramasser(Stockable objet){
     	if (poidsInventaire+objet.getPoids() >= poidsMaxInventaire)
       		System.out.println("Vous ne pouvez pas stocker cet objet (il pèse: "+objet.getPoids()+") et vous portez deja :"+poidsInventaire+"/"+poidsMaxInventaire);
@@ -196,22 +214,45 @@ public class Personnage{
 	
   	public void seDeplacer(String direction){
     	if(direction.equals("Nord")){
-      		y--;
+      		x--;
     	}
     	if(direction.equals("Sud")){
-      		y++;
+      		x++;
     	}
 	    if(direction.equals("Ouest")){
-	      	x--;
+	      	y--;
 	    }
 	    if(direction.equals("Est")){
-	      	x++;
+	      	y++;
 	    }
-	    carte[x][y].decrireLieu();
+	    if(carte[x][y].getConstructions().size()!= 0) {
+	    	System.out.println("Vous arrivez dans un de vos camps");
+	    }
+	    else {
+	    	carte[x][y].decrireLieu();
+	    }
 	    carte[x][y].genererAnimal();
   	}
     public boolean estFabricable(Fabricable objet){
 		boolean estFabricable = false;
+		if(objet instanceof Construction) {
+			if(!objet.toString().equals("Camp") && carte[x][y].getConstructions().size()==0) {
+				System.out.println("Vous devez d'abord construire un camp");
+				return false;
+			}
+			for(int k=0;k<carte[x][y].getConstructions().size();k++) {
+				if(objet.toString().equals(carte[x][y].getConstructions().get(k).toString())){
+					System.out.println("Vous avez déjà construit cet objet dans cette zone");
+					return false;
+				}
+			}
+			if(objet.toString().equals("Camp")) {
+				if(Camp.getNbCamps()>=nbMaxCamps) {
+					return false;
+				}
+			}
+			
+		}
 		for(int i=0;i<(objet.listeMateriaux()).size();i++){
 			for(int j = 0; j<aliments.size(); j++){
 				if( (aliments.get(j)).toString()==((objet.listeMateriaux()).get(i)).toString() && aliments.get(j).getQuantite()>=(objet.listeMateriaux()).get(i).getQuantite()){
@@ -229,11 +270,7 @@ public class Personnage{
 			estFabricable = false;
 		}
 		return(true);
-	}
-
-	
-				
-			
+	}	
 			
  	public void fabriquer(){ //afficher les objets que l'on peut fabriquer et les matÃ©riaux Ã  avoir pour le faire ? YEP
 		System.out.println("Que voulez vous fabriquer?");
@@ -246,24 +283,26 @@ public class Personnage{
 			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.");
 		}
 		else{
-			/*if(listeFabrication.get(str) instanceof Construction){
-				
-			}*/
-			/*else{*/
+			if(listeFabrication.get(str-1) instanceof Construction){
+				carte[x][y].getConstructions().add((Construction)listeFabrication.get(str-1).clone());
+			}
+			else{
 				this.ramasser(listeFabrication.get(str-1).clone());
-			/*}*/
+			}
 			for(int i=0;i<((listeFabrication.get(str-1)).listeMateriaux()).size();i++){
 				for(int j = 0; j<aliments.size(); j++){
 					if( (aliments.get(j)).toString()==(((listeFabrication.get(str-1)).listeMateriaux()).get(i)).toString()){
 						this.jeterObjet(j,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),aliments);
+					}
 				}
 				for(int k = 0; k<ressourcesNonComestibles.size(); k++){
 					if( (ressourcesNonComestibles.get(k)).toString()==(((listeFabrication.get(str-1)).listeMateriaux()).get(i)).toString()){
 						this.jeterObjet(k,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),ressourcesNonComestibles);
+					}
 				}
-				}
-				}
+				
 			}
+			System.out.println("Vous avez fabriqué un " + listeFabrication.get(str-1).toString());
 		}
   	}
   
@@ -316,12 +355,21 @@ public class Personnage{
 	}
 
 	public void fuir(){ //LAU
-  		System.out.println("Vous essayez de fuir");
   		(carte[x][y].getOccupant()).reagirFuite(this);
   		carte[x][y].changerAnimal(null);
   	}
   
   	public void pecher(){
   	
+  	}
+  	public void dormir() {
+  		energie = energie + 60;
+  		if(carte[x][y].getConstructions().size()==0) {
+  			if(Math.random()<0.3) {
+  				System.out.println("Vous avez été attaqué par des animaux sauvages durant votre sommeil, vous perdez 15 PV");
+  			}
+  		date++;
+  		}
+  		System.out.println("Vous vous réveillez le lendemain matin");
   	}
 }

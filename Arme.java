@@ -22,7 +22,6 @@ public abstract class Arme implements Stockable{
   public void modifierQuantite(int n) {}
   public abstract void descriptionEchec();
   public abstract void descriptionReussite();
-  public abstract Stockable clone();
   public String toString() {
 	  return nom;
   }

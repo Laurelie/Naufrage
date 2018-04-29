@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+
 public abstract class Lieu{
+  private ArrayList<Construction> constructions = new ArrayList<Construction>();
   private AnimauxChassable occupant;
   private String nom;
   protected Lieu(String nom){
@@ -19,5 +22,8 @@ public abstract class Lieu{
   }
   public String getNom(){
     return nom;
+  }
+  public ArrayList<Construction> getConstructions(){
+	  return constructions;
   }
 }
