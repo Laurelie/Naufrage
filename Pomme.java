@@ -1,3 +1,5 @@
-/*public class Pomme extends Fruits{
-
-}*/
+public class Pomme extends Fruits{
+	public Pomme(){
+		super("Pomme",false,5,5);
+	}
+}

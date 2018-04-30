@@ -14,10 +14,13 @@ public class Montagne extends Lieu{
   	    str = Integer.parseInt(sc.nextLine());
   	}
     if(str==1)
-  		System.out.println("Pas encore fait ! C'est pour ramasser les minerais");
+  		p.miner();
   }
   public void genererAnimal(){
   	
+  }
+  public void genererObjet(){
+    
   }
   public void decrireLieu(){
     System.out.println("Vous arrivez devant une montagne, vous levez la tete sans meme apercevoir le sommet.");

@@ -1,20 +1,20 @@
 import java.util.ArrayList;
 
-public class Lance extends Arme implements Fabricable{
-   public Lance(){
-      super(3,0.7,"Lance");
+public class Hache extends Arme implements Fabricable{
+   public Hache(){
+      super(6,0.7,"Hache");
    }
     
    public ArrayList<Stockable> listeMateriaux(){
 	   ArrayList<Stockable> liste = new ArrayList<Stockable>();
-	   liste.add(new Bois(2));
-	   liste.add(new Pierre(1));
+	   liste.add(new Bois(3));
+	   liste.add(new Pierre(5));
 	   return liste;
    }
    public int getPoids() {
 	   return(500);
    }
    public Stockable clone() {
-	   return new Lance();
+	   return new Hache();
    }
 }

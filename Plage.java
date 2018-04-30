@@ -24,8 +24,17 @@ public class Plage extends Lieu{
   	listePechable.add(new Saumon());
   	listePechable.add(new Sardine());
   	listePechable.add(new Dorade());
+    listePechable.add(new PoissonChat());
   	this.setPechable(listePechable);
   }
+
+  public void genererObjet(){
+    listePechable.add(new Coquillage());
+    listePechable.add(new Bouteille());
+    listePechable.add(new Lunettes());
+    this.setPechable(listePechable);
+  }
+
   public void decrireLieu(){
     System.out.println("Vous sentez la douceur du sable sous vos pieds. Vous relevez la tete : la plage...la mer.");
   }

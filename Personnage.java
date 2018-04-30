@@ -28,6 +28,7 @@ public class Personnage{
 		listeFabrication.add(new Lance());
 		listeFabrication.add(new Camp());
 		listeFabrication.add(new CannePeche());
+		listeFabrication.add(new Hache());
 		//creation de la carte
 		for(int i=0;i<6;i++) {
 			for(int j=0;j<6;j++) {
@@ -109,7 +110,7 @@ public class Personnage{
 		System.out.println("Mer = Me");
 		System.out.println("Plage = Pl");
 		System.out.println("Votre position = XX");
-		System.out.println("Camp = Ca");
+		System.out.println("Camp = Ca\n");
 	}
 	public void afficherListe(ArrayList<Stockable> liste){
 		System.out.println("");
@@ -176,19 +177,17 @@ public class Personnage{
 			afficherListe(constructions);
 		}*/
 }
-			
+			//PROBLEME SI ON JETE LES POINGS : il disparaisse
   public void jeterObjet(int i, int quantite, ArrayList<Stockable> liste){
 	  if(i<liste.size()){
 		  if((liste.get(i)).getQuantite()<quantite){
 			  System.out.println("Vous avez moins de "+ quantite +" "+(liste.get(i)).toString());
 		  }
-		  if((liste.get(i)).getQuantite()==quantite){
-			  liste.remove(i);
-		  }
+		  //J'ai enleve le remove si cst la meme quantite : ca fonctionne mntn avant ca bug (par exemple Ours x1 je jetais une quantite et ca bounds exception)
 		  else{
 			  (liste.get(i)).modifierQuantite(-quantite);
 		  }
-		  poidsInventaire =- quantite*((liste.get(i)).getPoids());
+		  poidsInventaire -= quantite*((liste.get(i)).getPoids());
 	  }
   }
 	  
@@ -242,6 +241,7 @@ public class Personnage{
 	    	carte[x][y].decrireLieu();
 	    }
 	    carte[x][y].genererAnimal();
+	    carte[x][y].genererObjet();
   	}
     public boolean estFabricable(Fabricable objet){
 		boolean estFabricable = false;
@@ -283,12 +283,15 @@ public class Personnage{
 	}	
 			
  	public void fabriquer(){ //afficher les objets que l'on peut fabriquer et les matériaux à avoir pour le faire ? YEP
-		System.out.println("Que voulez vous fabriquer?");
+		System.out.println("Que voulez vous fabriquer ?\n");
 		for(int i = 0; i<listeFabrication.size(); i++){
 			System.out.println((i+1)+"- "+(listeFabrication.get(i)).toString());
 			this.afficherListe(listeFabrication.get(i).listeMateriaux());
 		}
+		System.out.println("\nPressez 0 pour retour\n");
 		int str = Integer.parseInt(sc.nextLine());
+		if(str==0)
+			return;
 		if(!this.estFabricable(listeFabrication.get(str-1))){
 			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.");
 		}
@@ -321,12 +324,14 @@ public class Personnage{
 	  		System.out.println("Vous n'avez rien a manger.");
 	    else{
 	    	this.afficherListe(aliments);
-	    	System.out.println("Selectionnez un aliment a manger");
+	    	System.out.println("Selectionnez un aliment a manger\n\n\nPressez 0 pour annuler");
 	    	int str = Integer.parseInt(sc.nextLine());
 	    	while( str < 0 || str > aliments.size()){
 	    		System.out.println("Mauvaise selection. Recommencez.");
 	    		str = Integer.parseInt(sc.nextLine());
 	    	}
+	    	if(str==0)
+	    		return;
 	    	if (sante <= 100){
 	      		sante += ((Mangeable)(aliments.get(str-1))).estMange(this); //le choix commence a 1
 	      	}
@@ -369,22 +374,23 @@ public class Personnage{
   		(carte[x][y].getOccupant()).reagirFuite(this);
   		carte[x][y].changerAnimal(null);
   	}
-  
+  		//PROBLEME Les elements de surPlage : ex Coquillage / Lunettes Cassees : leur toString est le toString de java : Coquillage@345641
   	public void pecher(){
   		boolean bool = false;
   		for(int i =0; i<ressourcesNonComestibles.size();i++){
-  			if (ressourcesNonComestibles.get(i).toString().equals("Canne a Peche"));
+  			if (ressourcesNonComestibles.get(i).toString().equals("Canne a Peche")){
   				bool = true;
+  				break;
+  			}
    		}
    		if(bool){
    			System.out.println("Vous lancez votre canne !");
-   			int alea = (int)(Math.random()*3); //3pechables
-   			System.out.println("alea "+alea);
+   			int alea = (int)(Math.random()*7); //7pechables
    			Pechable peche = (carte[x][y].getPechable(alea)).estPecher(this);
    			if(poidsInventaire+peche.getPoids() <= poidsMaxInventaire)
 	   			this.ramasser(peche);
 	   		else
-	   			System.out.println("Vous n'avez plus de place dans l'inventaire. Vous jetez votre peche");
+	   			System.out.println("Vous n'avez plus de place dans l'inventaire. Vous jetez "+peche.toString());
    			return;
    		}
    		System.out.println("Vous n'avez pas de canne a peche pour pecher !");
@@ -398,5 +404,63 @@ public class Personnage{
   		date++;
   		}
   		System.out.println("Vous vous reveillez le lendemain matin");
+  	}
+  	public void cueillir(){
+  		System.out.println("Vous cherchez des fruits !");
+		int alea = (int)(Math.random()*2); //2fruits
+		Fruits fruit = carte[x][y].getFruits(alea);
+		int i= (int)(Math.random()*5)+1;
+	    System.out.println("Vous avez ramasse "+i+" "+fruit.toString()+" !");
+	    fruit.modifierQuantite(i);
+		if(poidsInventaire+fruit.getPoids() <= poidsMaxInventaire)
+			this.ramasser(fruit);
+		else
+			System.out.println("Vous n'avez plus de place dans l'inventaire. Vous jetez "+fruit.toString());
+  	}
+
+  	public void miner(){
+  		recolterRessources(new Pierre(0));
+  	}
+
+  	public void couperArbre(){
+  		recolterRessources(new Bois(0));
+  	}
+
+  	public void recolterRessources(Stockable objet){
+  		Arme armeUtilisee;
+	    if(equipement.size()==1){
+	      System.out.println("Vous n'avez pas d'arme, vous ramassez ce que vous trouvez par terre.");
+	      armeUtilisee = (Arme) equipement.get(0);
+	      int i= (int)(Math.random()*3);
+	      System.out.println("Vous avez trouve "+i+" "+objet.toString()+" !");
+	      objet.modifierQuantite(i);
+	      this.ramasser(objet); //chance de ramasser 1 à 3 de bois
+	    }
+	    else{
+	      	System.out.println("Quelle arme voulez vous utiliser?");
+	      	this.afficherListe(equipement);
+	      	int str = Integer.parseInt(sc.nextLine());
+	      	while( str < 0 || str > equipement.size()){
+	    		System.out.println("Mauvaise selection. Recommencez.");
+	    		str = Integer.parseInt(sc.nextLine());
+	    	}
+	      	armeUtilisee = (Arme) equipement.get(str-1); //le choix commence a 1
+	      	if(str==1){ //il prend les poings
+	      		int i= (int)(Math.random()*3);
+	   		    System.out.println("Vous avez trouve "+i+" "+objet.toString()+" !");
+	   		    objet.modifierQuantite(i);
+	   		    this.ramasser(objet); //chance de ramasser 1 à 3 de bois
+	      	}
+	      	else if((int)(Math.random()*5)<(armeUtilisee.getDegat())){ //si degat plus petit que 5 : 1 chance sur degat pour que l'arme casse 
+	      		int i= (int)(Math.random()*5)+1;
+	      		System.out.println("Vous avez ramasse "+i+" "+objet.toString()+" !");
+	      		objet.modifierQuantite(i);
+	      		this.ramasser(objet); //chance de ramasser 1 à 3 de bois
+	      	}
+	      	else{
+	      		System.out.println("Vous avez casser votre "+armeUtilisee.getNom()+" en essayant de recolter "+objet.toString()+" !");
+	      		this.jeterObjet(str-1, 1, equipement);
+	      	}
+	    }
   	}
 }

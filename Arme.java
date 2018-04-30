@@ -19,9 +19,15 @@ public abstract class Arme implements Stockable{
   public int getQuantite() {
 	  return 1;
   }
-  public void modifierQuantite(int n) {}
-  public abstract void descriptionEchec();
-  public abstract void descriptionReussite();
+  public void modifierQuantite(int n) {
+
+  }
+  public void descriptionEchec(){
+    System.out.println("Votre "+nom+" passe à coté de l'adversaire.");
+  }
+  public void descriptionReussite(){
+    System.out.println("Vous touchez l'adversaire et vous lui infligez "+degat+" blessures");
+  }
   public String toString() {
 	  return nom;
   }

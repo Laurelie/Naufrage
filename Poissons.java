@@ -10,7 +10,7 @@ public abstract class Poissons extends Animaux implements Pechable{
 			this.reagirPeche(p);
 		}
 		else 
-			System.out.println("Vous manquez de peu votre proie !");
+			System.out.println("Bien essayé "+p.getNom()+" ! Vous manquez de peu votre proie !");
 		return this;
 	}
 	public void reagirPeche( Personnage p){

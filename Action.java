@@ -5,11 +5,10 @@ public class Action{
      	if(p.getSante() <=0)     //LAU : arreter des qu'il y a game over
      		return;
      	if(p.getEnergie()<=0) {
-     		System.out.println("Vous vous effondrez a cause de la fatigue");
+     		System.out.println("Vous vous effondrez a cause de la fatigue !");
      		p.dormir();
      	}
-        p.seDeplacer(""); //pour que les animaux se generent : on arrive sur une plage, possibilite de pecher 
-     	System.out.println("\n\tQue voulez-vous faire?\n\n");
+     	System.out.println("\n\tQue voulez-vous faire "+p.getNom()+" ?\n\n");
           boolean nord = false;
           boolean sud = false;
           boolean est = false;
@@ -152,8 +151,10 @@ public class Action{
                else
                   System.out.println("4) Vous etes bloque par la mer a l'est.");
 
-               System.out.println("5) Manger. \n6) Fabriquer \n7) Afficher la carte \n8) Afficher son statut \n9) Consulter l'inventaire\n10) Choix propre au lieu\n\n\nPressez 0 pour quitter le jeu");
+               System.out.println("5) Manger. \n6) Fabriquer \n7) Afficher la carte \n8) Afficher son statut \n9) Consulter l'inventaire\n10) Choix propre au lieu\n\n\n\t\t\tPressez 0 pour quitter le jeu\n");
                int str = Integer.parseInt(sc.nextLine());
+               if (str==0)
+                return;
                if(str==1 && nord){
                   p.seDeplacer("Nord");
                   commandeExecutee=true;

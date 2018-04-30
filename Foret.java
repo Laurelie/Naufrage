@@ -1,7 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Foret extends Lieu{
   Scanner sc = new Scanner(System.in);
+  private ArrayList<Fruits> listeFruits = new ArrayList<Fruits>();
   public Foret(){
     super("Foret");
   }
@@ -12,8 +14,12 @@ public class Foret extends Lieu{
       System.out.println("Mauvaise selection. Recommencez.");
       str = Integer.parseInt(sc.nextLine());
     }
-    if(str==1 || str==2)
-      System.out.println("Pas encore fait !");
+    if(str==1)
+      p.couperArbre();
+    
+
+    if(str==2)
+      p.cueillir();
          
   }
   public void genererAnimal(){
@@ -26,6 +32,13 @@ public class Foret extends Lieu{
       System.out.println("Vous apercevez un lapin derrière un buisson.");
     }
   }
+
+  public void genererObjet(){
+    listeFruits.add(new Pomme());
+    listeFruits.add(new Baies());
+    this.setFruits(listeFruits);
+  }
+
   public void decrireLieu(){
     System.out.println("Vous avancer dans une foret dense.");
   }
