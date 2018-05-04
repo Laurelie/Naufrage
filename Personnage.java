@@ -35,11 +35,11 @@ public class Personnage{
 				if(i==0 || i==5 || j==0 || j==5) 
 					carte[i][j]= new Mer();
 				
-				else if (i==1||j==1)
+				else if (i==1 || j==1)
 					carte[i][j] = new Plage();
 
-				//else if (j==4||i=4)
-					//carte[i][j] = new Montagne();
+				else if (i==4 || j==4)
+					carte[i][j] = new Montagne();
 
 				else 
 					carte[i][j] = new Foret();
@@ -81,15 +81,16 @@ public class Personnage{
 	public void modifierSante(int nb){
 	  	sante= sante+nb;
 	  	if(sante<=0){
-	    	System.out.println("\nVous etes mort.... GAME OVER\n");}
+	    	System.out.println("\n\tVous etes mort.... GAME OVER\n");}
 	}
 	public void afficherStatut(){ //LAU
 		System.out.println("Vous etes "+nom+"\nSante: "+sante+"\nEnergie: "+energie+"\nVous portez "+poidsInventaire+" pds /" +poidsMaxInventaire+ "pds");
 	}
 	public void afficherCarte(){
+		System.out.println("Voici votre carte :\n");
 		String ligne ="\n";
 		for(int i=0;i<carte.length;i++){
-			ligne = "";
+			ligne = "\t";
 			for(int j = 0;j<carte[i].length;j++){
 				if(x==i && y==j) {
 					ligne+= "  XX";
@@ -105,7 +106,7 @@ public class Personnage{
 			}
 			System.out.println(ligne);
 		}
-		System.out.println("Montagne = Mo");
+		System.out.println("\nMontagne = Mo");
 		System.out.println("Foret = Fo");
 		System.out.println("Mer = Me");
 		System.out.println("Plage = Pl");
@@ -123,25 +124,27 @@ public class Personnage{
 	}
 	
 	public void consulterInventaire(){
-		System.out.println("Que voulez vous consulter? \n 1) Besace a nourriture \n 2) Sacoche a ressources \n 3) Equipement \n 4) Constructions \n\n\nPressez 0 pour revenir en arriere");
+		System.out.println("Que voulez vous consulter? \n 1) Besace a nourriture \n 2) Sacoche a ressources \n 3) Equipement \n 4) Constructions \n\n\tPressez 0 pour revenir en arriere");
 		int str = Integer.parseInt(sc.nextLine());
 		while(str<0 || str>4){
-			System.out.println("Commande invalide");
-			System.out.println("Que voulez vous consulter? \n 1) Besace a nouriture \n 2) Sacoche a ressources \n 3) Equipement \n 4) Constructions ");
+			System.out.println("Commande invalide. Recommencez");
 			str = Integer.parseInt(sc.nextLine());
 		}
 		if(str==0)
 			return;
-		System.out.println("Selectionner un element pour le jeter, selectionner 0) pour ne rien jeter.");
+		System.out.println("Selectionner un element pour le jeter.");
 		if(str == 1){
 			this.afficherListe(aliments);
+			System.out.println("\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
 			while(str<0 || str>aliments.size()){
-				System.out.println("Commande invalide");
-				System.out.println("Selectionner un element pour le jeter, selectionner 0) pour ne rien jeter.");
+				System.out.println("Commande invalide. Recommencez");
 				str = Integer.parseInt(sc.nextLine());
 			}
-			if (str==0) return;
+			if (str==0) {
+				this.consulterInventaire();
+				return;
+			}
 			System.out.println("Combien voulez vous en jeter?");
 			int quantite = Integer.parseInt(sc.nextLine());
 			this.jeterObjet(str-1,quantite,aliments);
@@ -149,13 +152,16 @@ public class Personnage{
 		}
 		if(str == 2){
 			afficherListe(ressourcesNonComestibles);
+			System.out.println("\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
 			while(str<0 || str>ressourcesNonComestibles.size()){
-				System.out.println("Commande invalide");
-				System.out.println("Selectionner un element pour le jeter, selectionner 0) pour ne rien jeter.");
+				System.out.println("Commande invalide. Recommencez");
 				str = Integer.parseInt(sc.nextLine());
 			}
-			if(str==0) return;
+			if (str==0) {
+				this.consulterInventaire();
+				return;
+			}
 			System.out.println("Combien voulez vous en jeter?");
 			int quantite = Integer.parseInt(sc.nextLine());
 			jeterObjet(str-1,quantite,ressourcesNonComestibles);
@@ -163,13 +169,16 @@ public class Personnage{
 		}
 		if(str == 3){
 			this.afficherListe(equipement);
+			System.out.println("\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
 			while(str<0 || str>equipement.size()){
-				System.out.println("Commande invalide");
-				System.out.println("Selectionner un element pour le jeter, selectionner 0) pour ne rien jeter.");
+				System.out.println("Commande invalide. Recommencez");
 				str = Integer.parseInt(sc.nextLine());
 			}
-			if(str == 0) return;
+			if (str==0) {
+				this.consulterInventaire();
+				return;
+			}
 			jeterObjet(str-1,1,equipement);
 			return;
 		}
@@ -243,6 +252,12 @@ public class Personnage{
 	    carte[x][y].genererAnimal();
 	    carte[x][y].genererObjet();
   	}
+
+  	public void mAjprofil(){
+  		System.out.println("\t\t\t\t\t"+this.getSante()+"% de vie restant");
+  		System.out.println("\t\t\t\t\t"+this.getEnergie()+"% d'energie restant\n");
+  	}
+
     public boolean estFabricable(Fabricable objet){
 		boolean estFabricable = false;
 		if(objet instanceof Construction) {
@@ -290,12 +305,13 @@ public class Personnage{
 		}
 		System.out.println("\nPressez 0 pour retour\n");
 		int str = Integer.parseInt(sc.nextLine());
-		if(str==0)
-			return;
+		if(str==0) return;
+
 		if(!this.estFabricable(listeFabrication.get(str-1))){
 			System.out.println("Vous n'avez pas suffisement de ressources pour fabriquer cela.");
 		}
 		else{
+			this.modifierEnergie(-10); //pas modifier si on fait retour ou si on a pas les ressources necessaires
 			if(listeFabrication.get(str-1) instanceof Construction){
 				carte[x][y].getConstructions().add((Construction)listeFabrication.get(str-1).clone());
 			}
@@ -384,6 +400,8 @@ public class Personnage{
   			}
    		}
    		if(bool){
+   			//J'ai une canne : j'effectue l'action : mon energie baisse
+    		this.modifierEnergie(-10);
    			System.out.println("Vous lancez votre canne !");
    			int alea = (int)(Math.random()*7); //7pechables
    			Pechable peche = (carte[x][y].getPechable(alea)).estPecher(this);
@@ -406,6 +424,8 @@ public class Personnage{
   		System.out.println("Vous vous reveillez le lendemain matin");
   	}
   	public void cueillir(){
+  		//Je cherche des fruits : j'effectue l'action : mon energie baisse
+    	this.modifierEnergie(-10);
   		System.out.println("Vous cherchez des fruits !");
 		int alea = (int)(Math.random()*2); //2fruits
 		Fruits fruit = carte[x][y].getFruits(alea);
@@ -420,10 +440,14 @@ public class Personnage{
 
   	public void miner(){
   		recolterRessources(new Pierre(0));
+  		//j'effectue l'action : mon energie baisse
+    	this.modifierEnergie(-10);
   	}
 
   	public void couperArbre(){
   		recolterRessources(new Bois(0));
+  		//j'effectue l'action : mon energie baisse
+    	this.modifierEnergie(-10);
   	}
 
   	public void recolterRessources(Stockable objet){
@@ -431,7 +455,7 @@ public class Personnage{
 	    if(equipement.size()==1){
 	      System.out.println("Vous n'avez pas d'arme, vous ramassez ce que vous trouvez par terre.");
 	      armeUtilisee = (Arme) equipement.get(0);
-	      int i= (int)(Math.random()*3);
+	      int i= (int)(Math.random()*4);
 	      System.out.println("Vous avez trouve "+i+" "+objet.toString()+" !");
 	      objet.modifierQuantite(i);
 	      this.ramasser(objet); //chance de ramasser 1 à 3 de bois
@@ -446,13 +470,13 @@ public class Personnage{
 	    	}
 	      	armeUtilisee = (Arme) equipement.get(str-1); //le choix commence a 1
 	      	if(str==1){ //il prend les poings
-	      		int i= (int)(Math.random()*3);
+	      		int i= (int)(Math.random()*4);
 	   		    System.out.println("Vous avez trouve "+i+" "+objet.toString()+" !");
 	   		    objet.modifierQuantite(i);
 	   		    this.ramasser(objet); //chance de ramasser 1 à 3 de bois
 	      	}
 	      	else if((int)(Math.random()*5)<(armeUtilisee.getDegat())){ //si degat plus petit que 5 : 1 chance sur degat pour que l'arme casse 
-	      		int i= (int)(Math.random()*5)+1;
+	      		int i= (int)(Math.random()*6)+1;
 	      		System.out.println("Vous avez ramasse "+i+" "+objet.toString()+" !");
 	      		objet.modifierQuantite(i);
 	      		this.ramasser(objet); //chance de ramasser 1 à 3 de bois

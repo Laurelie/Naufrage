@@ -20,9 +20,4 @@ public class Ours extends AnimauxChassable{
       System.out.println("L'ours mange du miel, il ne vous voit pas");
     }
   }
-  public void descriptionMort(){
-     System.out.println("L'ours s'effondre par terre, raide mort.");
-     setVivant(false);
-  }
-
 }

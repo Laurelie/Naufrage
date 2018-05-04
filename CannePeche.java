@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class CannePeche extends Construction {
+public class CannePeche implements Fabricable{ //extends Construction { //on doit pouvoir l'utiliser sans etre sur un camp
 	private static int nbCannePeche = 0;
 	public CannePeche() {
 		nbCannePeche++;
@@ -21,5 +21,15 @@ public class CannePeche extends Construction {
 	}
 	public static int getNbCannePeche() {
 		return nbCannePeche;
+	}
+	//ce qui est en plus dans construction
+	public int getPoids() {
+		return 0;
+	}
+	public int getQuantite() {
+		return 1;
+	}
+	public void modifierQuantite(int n){
+		
 	}
 }

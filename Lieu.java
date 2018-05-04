@@ -6,6 +6,7 @@ public abstract class Lieu{
   private String nom;
   private ArrayList<Pechable> listePechable = new ArrayList<Pechable>();
   private ArrayList<Fruits> listeFruits = new ArrayList<Fruits>();
+  //private ArrayList<AnimauxChassable> listeAnimaux = new ArrayList<AnimauxChassable>();
   protected Lieu(String nom){
     this.nom = nom;
     occupant = null;
@@ -25,6 +26,19 @@ public abstract class Lieu{
   public AnimauxChassable getOccupant(){
     return(occupant);
   }
+
+//LE TOP ce serait de faire comme avec les poissons, faire un tableau d'animaux chassables puis tiré au sort SEULEMENT : PB dans combattre
+/*
+  public void setOccupant(ArrayList<AnimauxChassable> listeAnimaux){
+      this.listeAnimaux = listeAnimaux;
+  }
+  public AnimauxChassable getOccupant(int i){
+    if(i>=0 && i<listePechable.size())
+      return listePechable.get(i);
+    return null;
+  }
+  */
+
   public String getNom(){
     return nom;
   }

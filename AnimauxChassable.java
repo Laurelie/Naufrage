@@ -14,6 +14,10 @@ public abstract class AnimauxChassable extends Animaux {
 		  }
   	public abstract void reagirAttaque( Personnage p);
   	public abstract void reagirFuite(Personnage p);
-  	public abstract void descriptionMort();
+  	
+  	public void descriptionMort(){
+  		System.out.println(this.nom+" s'effondre par terre, raide mort.");
+     	this.setVivant(false);
+  	}
   	/*public void reagirapprivoiser(Personnage p, ? implements Mangeable aliment);*/
 }

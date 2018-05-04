@@ -4,11 +4,17 @@ public class Action{
      public static void agir(Personnage p){
      	if(p.getSante() <=0)     //LAU : arreter des qu'il y a game over
      		return;
-     	if(p.getEnergie()<=0) {
-     		System.out.println("Vous vous effondrez a cause de la fatigue !");
+     	if(p.getEnergie()<=0){
+     		System.out.println("\n\tVous vous effondrez a cause de la fatigue !\n");
      		p.dormir();
      	}
-     	System.out.println("\n\tQue voulez-vous faire "+p.getNom()+" ?\n\n");
+      //Rappeler quand on a sommeil
+      if(p.getEnergie()<30) System.out.println("\n\tVous avez du mal à voir, vos yeux se ferment tout seul... Vous sentez venir la fatigue\n");
+     	//rappeler quand on manque de sante
+      if(p.getSante()<30) System.out.println("\n\tGRARH !!! Votre ventre gronde. Pensez à vous nourrir !\n");
+
+      System.out.println("\n\tQue voulez-vous faire "+p.getNom()+" ?\n");
+          p.mAjprofil();
           boolean nord = false;
           boolean sud = false;
           boolean est = false;
@@ -118,7 +124,7 @@ public class Action{
                     p.fuir();
                }
                if(str!=1 && str!=2 && str!=3){
-                    System.out.println("Commande introuvable.");
+                    System.out.println("Commande introuvable. Recommencez");
                }
                Action.agir(p);
           }
@@ -182,7 +188,7 @@ public class Action{
                if(str==6){
                   p.fabriquer();
                   commandeExecutee=true;
-                  p.modifierEnergie(-10);
+                  //p.modifierEnergie(-10); pas modifier si on fait retour
                }
                
                if(str==7){
@@ -197,14 +203,15 @@ public class Action{
                     p.consulterInventaire();
                     commandeExecutee=true;
                }
+               //AJOUTER LE CHOIX DORMIR ? Quand on se trouve dans un camp ?
                if(str==10){
                     position.choixAction(p);
                     commandeExecutee=true;
-                    p.modifierEnergie(-10);
+                    //p.modifierEnergie(-10); pas modifier si on fait retour
                }
                
                if(!commandeExecutee){
-                    System.out.println("Commande introuvable.");
+                    System.out.println("Commande introuvable. Recommencez");
                }
                Action.agir(p);
           }
