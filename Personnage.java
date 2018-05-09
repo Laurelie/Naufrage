@@ -50,6 +50,7 @@ public class Personnage{
     	sante = 100;
     	x=1;
     	y=1;
+    	carte[x][y].decouvrir();
     	poidsInventaire =0;
     	poidsMaxInventaire=1500;
 	}
@@ -58,6 +59,12 @@ public class Personnage{
 	}
 	public int getY() {
 	 	return y;
+	}
+	public int getDate() {
+		return date;
+	}
+	public void modifierDate(int n) {
+		date = date + n;
 	}
 	public String getNom(){
 	 	return nom;
@@ -74,6 +81,9 @@ public class Personnage{
 	    	System.out.println("\nVous vous evanouissez a cause de la fatigue.\n");
 	    	/*Reste a definir ce que ca fait de s'evanouir*/
 	    }
+	  	if(energie>100) {
+	  		energie = 100;
+	  	}
 	}
 	public int getSante(){
     	return sante;
@@ -82,6 +92,9 @@ public class Personnage{
 	  	sante= sante+nb;
 	  	if(sante<=0){
 	    	System.out.println("\n\tVous etes mort.... GAME OVER\n");}
+	  	if(sante>100) {
+	  		sante=100;
+	  	}
 	}
 	public void afficherStatut(){ //LAU
 		System.out.println("Vous etes "+nom+"\nSante: "+sante+"\nEnergie: "+energie+"\nVous portez "+poidsInventaire+" pds /" +poidsMaxInventaire+ "pds");
@@ -115,6 +128,10 @@ public class Personnage{
 	}
 	public void afficherListe(ArrayList<Stockable> liste){
 		System.out.println("");
+		if(liste.size()==0) {
+			System.out.println("Cet inventaire est vide");
+			return;
+		}
 		for(int i=0; i<liste.size();i++){
 			if(liste.get(i)!=null) {
 				System.out.println((i+1)+") "+(liste.get(i)).toString()+ "  x "+(liste.get(i)).getQuantite());
@@ -171,7 +188,7 @@ public class Personnage{
 			this.afficherListe(equipement);
 			System.out.println("\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
-			while(str<0 || str>equipement.size()){
+			while(str<=0 || str>equipement.size()){
 				System.out.println("Commande invalide. Recommencez");
 				str = Integer.parseInt(sc.nextLine());
 			}
@@ -249,6 +266,7 @@ public class Personnage{
 	    else {
 	    	carte[x][y].decrireLieu();
 	    }
+	    carte[x][y].decouvrir();
 	    carte[x][y].genererAnimal();
 	    carte[x][y].genererObjet();
   	}
@@ -419,8 +437,11 @@ public class Personnage{
   			if(Math.random()<0.3) {
   				System.out.println("Vous avez ete attaque par des animaux sauvages durant votre sommeil, vous perdez 15 PV");
   			}
-  		date++;
   		}
+  		else {
+  			System.out.println("Votre camp vous protege des animaux sauvages");
+  		}
+  		date++;
   		System.out.println("Vous vous reveillez le lendemain matin");
   	}
   	public void cueillir(){

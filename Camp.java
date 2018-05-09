@@ -4,6 +4,7 @@ public class Camp extends Construction {
 	private static int nbCamps = 0;
 	public Camp() {
 		nbCamps++;
+		System.out.println("Vous avez construit un camp /n Attention! Vous ne pouvez construire que deux camps");
 	}
 	public ArrayList<Stockable> listeMateriaux() {
 		ArrayList<Stockable> liste = new ArrayList<Stockable>();

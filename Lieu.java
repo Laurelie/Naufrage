@@ -6,6 +6,7 @@ public abstract class Lieu{
   private String nom;
   private ArrayList<Pechable> listePechable = new ArrayList<Pechable>();
   private ArrayList<Fruits> listeFruits = new ArrayList<Fruits>();
+  private boolean estConnu = false;
   //private ArrayList<AnimauxChassable> listeAnimaux = new ArrayList<AnimauxChassable>();
   protected Lieu(String nom){
     this.nom = nom;
@@ -18,7 +19,10 @@ public abstract class Lieu{
   public abstract void decrireLieu();
 
   public String getSymbole(){
-    return(nom.substring(0,2));
+	  if(this.estConnu()) {
+		  return(nom.substring(0,2));
+	  }
+	  return("In");
   }
   public void changerAnimal(AnimauxChassable nouvelOccupant){
     occupant = nouvelOccupant;
@@ -62,5 +66,11 @@ public abstract class Lieu{
     if(i>=0 && i<listeFruits.size())
       return listeFruits.get(i);
     return null;
+  }
+  public boolean estConnu() {
+	  return estConnu;
+  }
+  public void decouvrir() {
+	  estConnu = true;
   }
 }
