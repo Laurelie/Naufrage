@@ -4,12 +4,11 @@ public class Crabe extends AnimauxChassable{
 	}
 	public void reagirAttaque( Personnage p){
 	    if(Math.random()<0.5){
-	      System.out.println("La pince du crabe vous manque de peu");
+	      txt.textAffichage("La pince du crabe vous manque de peu\n");
 	    }
 	    else{
-	      System.out.println("Vous vous faites pincer l'orteille ! -7 PV");
+	      txt.textAffichage("Vous vous faites pincer l'orteil ! -7 PV\n");
 	      p.modifierSante(-7);
 	    }
 	}
-	public void reagirFuite(Personnage p) {}
 }

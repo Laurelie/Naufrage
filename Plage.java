@@ -9,15 +9,14 @@ public class Plage extends Lieu{
     super("Plage");
   }
   public void choixAction(Personnage p){
-  	System.out.println("1) Pecher\n2)Se balader\n\n\tPressez 0 pour retour.\n");
+  	txt.textAffichage("1) Pecher\n\n\tPressez 0 pour retour.\n\n");
   	int str = Integer.parseInt(sc.nextLine());
 	  while( str < 0 || str > 3){
-	    System.out.println("Mauvaise selection. Recommencez.");
+	    txt.textAffichage("Mauvaise selection. Recommencez.\n");
 	    str = Integer.parseInt(sc.nextLine());
 	  }
     if(str==0) return;
     if(str==1) p.pecher();
-    if(str==2) System.out.println("Pas encore fait ! C'est pour ramasser des crabes"); // ? Necessaire ?
   }
   public void genererAnimal(){
     //dans l'eau
@@ -29,7 +28,7 @@ public class Plage extends Lieu{
     //sur le sable
     if(Math.random()<0.5){
       this.changerAnimal(new Crabe());
-      System.out.println("Vous apercevez un crabe au bord de l'eau.");
+      txt.textAffichage("Vous apercevez un crabe au bord de l'eau.\n");
     }
 
     //LE TOP ce serait de faire comme avec les poissons, faire un tableau d'animaux chassables puis tiré au sort SEULEMENT : PB dans combattre
@@ -46,6 +45,6 @@ public class Plage extends Lieu{
   }
 
   public void decrireLieu(){
-    System.out.println("Vous sentez la douceur du sable sous vos pieds. Vous relevez la tete : la plage...la mer.");
+    txt.textAffichage("Vous sentez la douceur du sable sous vos pieds. Vous relevez la tete : la plage...la mer.\n");
   }
 }

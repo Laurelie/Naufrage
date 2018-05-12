@@ -4,7 +4,8 @@ public class Camp extends Construction {
 	private static int nbCamps = 0;
 	public Camp() {
 		nbCamps++;
-		System.out.println("Vous avez construit un camp /n Attention! Vous ne pouvez construire que deux camps");
+		//new Camp() permet de pouvoir stocker un camp et de le placer sur la carte
+		//txt.textAffichage("Vous avez construit un camp \n Attention! Vous ne pouvez construire que deux camps\n");
 	}
 	public ArrayList<Stockable> listeMateriaux() {
 		ArrayList<Stockable> liste = new ArrayList<Stockable>();

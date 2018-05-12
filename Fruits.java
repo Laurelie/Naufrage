@@ -1,4 +1,5 @@
 public abstract class Fruits implements Mangeable{
+	protected Txt txt = new Txt();
 	private boolean poison;
 	private String nom;
 	private int rapportAlimentaire;
@@ -22,11 +23,11 @@ public abstract class Fruits implements Mangeable{
 	}
     public int estMange(Personnage p){ 
 		if (poison){
-	    	System.out.println("Vous mangez "+nom+" empoisonne : -"+rapportAlimentaire+" de santé");
+	    	txt.textAffichage("Vous mangez "+nom+" empoisonne : -"+rapportAlimentaire+" de santé\n");
 	    	return 0-rapportAlimentaire;
 	  	}
 	  	else{
-	    	System.out.println("Vous mangez "+nom+" +"+rapportAlimentaire+" de santé");
+	    	txt.textAffichage("Vous mangez "+nom+" +"+rapportAlimentaire+" de santé\n");
 	    	return rapportAlimentaire;
 	  	}
 	}

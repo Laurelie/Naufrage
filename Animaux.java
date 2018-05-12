@@ -1,4 +1,5 @@
-public abstract class Animaux implements Mangeable{
+public abstract class Animaux extends Txt implements Mangeable{
+	protected static Txt txt = new Txt(); //evite de l'insancier à chaque fois
 	private int quantite = 1;
 	private int poids;/* vu qu'on a un accesseur on peut le mettre private*/
 	protected String nom;
@@ -42,11 +43,11 @@ public abstract class Animaux implements Mangeable{
 	}
 	public int estMange(Personnage p){ 
 		if (cru){
-	    	System.out.println("Vous mangez un "+nom+" cru : -"+rapportAlimentaire+" de santé");
+	    	txt.textAffichage("Vous mangez un "+nom+" cru : -"+rapportAlimentaire+" de santé\n");
 	    	return 0-rapportAlimentaire;
 	  	}
 	  	else{
-	    	System.out.println("Vous mangez un "+nom+" cuisiné : +"+rapportAlimentaire+" de santé");
+	    	txt.textAffichage("Vous mangez un "+nom+" cuisiné : +"+rapportAlimentaire+" de santé\n");
 	    	return rapportAlimentaire;
 	  	}
 	}
@@ -55,7 +56,7 @@ public abstract class Animaux implements Mangeable{
 	    	cru = false;
 	  	}
 	  	else
-	    	System.out.println("On ne peut pas cuisiné un "+nom+" vivant");
+	    	txt.textAffichage("On ne peut pas cuisiné un "+nom+" vivant\n");
 	}
 	  public int getQuantite() {
 		  return quantite;

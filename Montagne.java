@@ -8,10 +8,10 @@ public class Montagne extends Lieu{
     super("Montagne");
   }
   public void choixAction(Personnage p){
-    System.out.println("1) Recuperer des minerais\n\n\tPressez 0 pour retour.\n");
+    txt.textAffichage("1) Recuperer des minerais\n\n\tPressez 0 pour retour.\n\n");
     int str = Integer.parseInt(sc.nextLine());
   	while( str < 0 || str > 2){
-  	    System.out.println("Mauvaise selection. Recommencez.");
+  	    txt.textAffichage("Mauvaise selection. Recommencez.\n");
   	    str = Integer.parseInt(sc.nextLine());
   	}
     if(str==0) return;
@@ -20,7 +20,7 @@ public class Montagne extends Lieu{
   public void genererAnimal(){
     if(Math.random()<0.5){
       this.changerAnimal(new Chamois());
-      System.out.println("Vous apercevez un chamois au loin.");
+      txt.textAffichage("Vous apercevez un chamois au loin.\n");
     }
     //LE TOP ce serait de faire comme avec les poissons, faire un tableau d'animaux chassables puis tiré au sort SEULEMENT : PB dans combattre
     /*
@@ -31,6 +31,6 @@ public class Montagne extends Lieu{
     
   }
   public void decrireLieu(){
-    System.out.println("Vous arrivez devant une montagne, vous levez la tete sans meme apercevoir le sommet.");
+    txt.textAffichage("Vous arrivez devant une montagne, vous levez la tete sans meme apercevoir le sommet.\n");
   }
 }

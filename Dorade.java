@@ -4,10 +4,10 @@ public class Dorade extends Poissons{
 	}
 	public void reagirPeche( Personnage p){
     	if(Math.random()<0.5){
-      		System.out.println("La "+super.toString()+" est mort quand vous le ramenez à bord");
+      		txt.textAffichage("La "+super.toString()+" est mort quand vous le ramenez à bord\n");
     	}
     	else{
-    		System.out.println(super.toString()+" vous arrache un doigt avant de mourir. Vous retire 10 PV");
+    		txt.textAffichage(super.toString()+" vous arrache un doigt avant de mourir. Vous retire 10 PV\n");
       		p.modifierSante(-3);
     	}
   	}

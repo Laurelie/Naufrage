@@ -13,10 +13,12 @@ public abstract class AnimauxChassable extends Animaux {
 		    	this.setVivant(false);
 		  }
   	public abstract void reagirAttaque( Personnage p);
-  	public abstract void reagirFuite(Personnage p);
+  	public void reagirFuite(Personnage p){
+  		txt.textAffichage(this.nom+" ne fait pas attention à vous\n");
+  	}
   	
   	public void descriptionMort(){
-  		System.out.println(this.nom+" s'effondre par terre, raide mort.");
+  		System.out.println(this.nom+" s'effondre par terre, raide mort.\n");
      	this.setVivant(false);
   	}
   	/*public void reagirapprivoiser(Personnage p, ? implements Mangeable aliment);*/

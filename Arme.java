@@ -1,4 +1,5 @@
 public abstract class Arme implements Stockable{
+  protected Txt txt = new Txt();
   private String nom;
   private int degat;
   private double precision;
@@ -23,10 +24,10 @@ public abstract class Arme implements Stockable{
 
   }
   public void descriptionEchec(){
-    System.out.println("Votre "+nom+" passe à coté de l'adversaire.");
+    txt.textAffichage("Votre "+nom+" passe à coté de l'adversaire.\n");
   }
   public void descriptionReussite(){
-    System.out.println("Vous touchez l'adversaire et vous lui infligez "+degat+" blessures");
+    txt.textAffichage("Vous touchez l'adversaire et vous lui infligez "+degat+" blessures\n");
   }
   public String toString() {
 	  return nom;

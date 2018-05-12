@@ -4,14 +4,11 @@ public class Chamois extends AnimauxChassable{
 	}
 	public void reagirAttaque( Personnage p){
 	    if(Math.random()<0.5){
-	      System.out.println("Les cornes du chamois vous manque de peu");
+	      txt.textAffichage("Les cornes du chamois vous manque de peu\n");
 	    }
 	    else{
-	      System.out.println("Vous vous faites renverser ! -15 PV");
+	      txt.textAffichage("Vous vous faites renverser ! -15 PV\n");
 	      p.modifierSante(-15);
 	    }
-	}
-	public void reagirFuite(Personnage p) {
-		
 	}
 }

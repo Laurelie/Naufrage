@@ -4,18 +4,11 @@ public class Lapin extends AnimauxChassable{
   	}
   	public void reagirAttaque( Personnage p){
     	if(Math.random()<0.7){
-      		System.out.println("Le lapin saute dans tous les sens sans vous effleurer");
+      		txt.textAffichage("Le lapin saute dans tous les sens sans vous effleurer\n");
     	}
     	else{
-    		System.out.println("Vous vous faîtes mordre le pieds. Vous retire 3 PV");
+    		txt.textAffichage("Vous vous faîtes mordre le pieds. Vous retire 3 PV\n");
       		p.modifierSante(-3);
     	}
-  	}
-  	public void reagirFuite(Personnage p) {
-    	System.out.println("Le lapin lapine");
-  	}
-  	public void descriptionMort(){
-     	System.out.println("Le lapin suffoque et meurt");
-     	setVivant(false);
   	}
 }

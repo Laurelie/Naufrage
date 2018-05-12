@@ -1,19 +1,21 @@
 import java.util.Scanner;
-public class Action{
+
+public class Action extends Txt{
+     static Txt txt = new Txt();
      static Scanner sc = new Scanner(System.in);
      public static void agir(Personnage p){
      	if(p.getSante() <=0)     //LAU : arreter des qu'il y a game over
      		return;
      	if(p.getEnergie()<=0){
-     		System.out.println("\n\tVous vous effondrez a cause de la fatigue !\n");
+     		txt.textAffichage("\n\tVous vous effondrez a cause de la fatigue !\n\n");
      		p.dormir();
      	}
       //Rappeler quand on a sommeil
-      if(p.getEnergie()<30) System.out.println("\n\tVous avez du mal à voir, vos yeux se ferment tout seul... Vous sentez venir la fatigue\n");
+      if(p.getEnergie()<30) txt.textAffichage("\n\tVous avez du mal à voir, vos yeux se ferment tout seul... Vous sentez venir la fatigue\n\n");
      	//rappeler quand on manque de sante
-      if(p.getSante()<30) System.out.println("\n\tGRARH !!! Votre ventre gronde. Pensez à vous nourrir !\n");
+      if(p.getSante()<30) txt.textAffichage("\n\tGRARH !!! Votre ventre gronde. Pensez à vous nourrir !\n\n");
 
-      System.out.println("\n\tQue voulez-vous faire "+p.getNom()+" ?\n");
+      txt.textAffichage("\n\tQue voulez-vous faire "+p.getNom()+" ?\n");
           p.mAjprofil();
           boolean nord = false;
           boolean sud = false;
@@ -25,10 +27,10 @@ public class Action{
           int y =p.getY();
           Lieu position = carte[x][y];
           if(position.getOccupant()!=null){
-               System.out.println("1) Fuir \n2) Chasser \n3) Ignorer");
+               txt.textAffichage("1) Fuir \n2) Chasser \n3) Ignorer\n");
                int str = Integer.parseInt(sc.nextLine());
                if(str==1){
-            	   System.out.println("Vous essayez de fuir");
+            	   txt.textAffichage("Vous essayez de fuir\n");
                     p.fuir();
                     int alea = (int)(Math.random()*4);
                     //cas au centre
@@ -113,73 +115,73 @@ public class Action{
 	                 			p.seDeplacer("Est");
                     }
                     
-                    p.modifierEnergie(-10);
+                    p.modifierEnergie(-5);
                }
                if(str==2){
                     p.combattre();
                     p.modifierEnergie(-10);
                }
                if(str==3){
-            	   System.out.println("Vous ignorez l'animal");
+            	   txt.textAffichage("Vous ignorez l'animal\n");
                     p.fuir();
                }
                if(str!=1 && str!=2 && str!=3){
-                    System.out.println("Commande introuvable. Recommencez");
+                    txt.textAffichage("Commande introuvable. Recommencez\n");
                }
                Action.agir(p);
           }
           else{
                if(!((carte[x-1][y].getNom()).equals("Mer"))){
-                  System.out.println("1) Aller au Nord.");
+                  txt.textAffichage("1) Aller au Nord.\n");
                   nord = true;
                }
                else
-                  System.out.println("1) Vous etes bloque par la mer au Nord");
+                  txt.textAffichage("1) Vous etes bloque par la mer au Nord\n");
 
                if(!((carte[x+1][y].getNom()).equals("Mer"))){
-                  System.out.println("2) Aller au Sud.");
+                  txt.textAffichage("2) Aller au Sud.\n");
                   sud = true;
                }
                else
-                  System.out.println("2) Vous etes bloque par la mer au Sud");
+                  txt.textAffichage("2) Vous etes bloque par la mer au Sud\n");
 
                if(!(carte[x][y-1].getNom()).equals("Mer")){
-                  System.out.println("3) Aller a l'ouest.");
+                  txt.textAffichage("3) Aller a l'ouest.\n");
                   ouest = true;
                }
                else
-                  System.out.println("3) Vous etes bloque par la mer a l'ouest.");
+                  txt.textAffichage("3) Vous etes bloque par la mer a l'ouest.\n");
 
                if(!(carte[x][y+1].getNom()).equals("Mer")){
-                  System.out.println("4) Aller a l'est.");
+                  txt.textAffichage("4) Aller a l'est.\n");
                   est = true;
                }
                else
-                  System.out.println("4) Vous etes bloque par la mer a l'est.");
+                  txt.textAffichage("4) Vous etes bloque par la mer a l'est.\n");
 
-               System.out.println("5) Manger. \n6) Fabriquer \n7) Afficher la carte \n8) Afficher son statut \n9) Consulter l'inventaire\n10) Choix propre au lieu\n\n\n\t\t\tPressez 0 pour quitter le jeu\n");
+               txt.textAffichage("5) Manger. \n6) Fabriquer \n7) Afficher la carte \n8) Afficher son statut \n9) Consulter l'inventaire\n10) Choix propre au lieu\n\n\n\t\t\tPressez 0 pour quitter le jeu\n\n");
                int str = Integer.parseInt(sc.nextLine());
                if (str==0)
                 return;
                if(str==1 && nord){
                   p.seDeplacer("Nord");
                   commandeExecutee=true;
-                  p.modifierEnergie(-10);
+                  p.modifierEnergie(-5);
                }
                if(str==2 && sud){
                   p.seDeplacer("Sud");
                   commandeExecutee=true;
-                  p.modifierEnergie(-10);
+                  p.modifierEnergie(-5);
                }
                if(str==3 && ouest){
                   p.seDeplacer("Ouest");
                   commandeExecutee=true;
-                  p.modifierEnergie(-10);
+                  p.modifierEnergie(-5);
                }
                if(str==4 && est){
                   p.seDeplacer("Est");
                   commandeExecutee=true;
-                  p.modifierEnergie(-10);
+                  p.modifierEnergie(-5);
                }
                if(str==5){
                   p.manger();
@@ -211,7 +213,7 @@ public class Action{
                }
                
                if(!commandeExecutee){
-                    System.out.println("Commande introuvable. Recommencez");
+                    txt.textAffichage("Commande introuvable. Recommencez\n");
                }
                Action.agir(p);
           }

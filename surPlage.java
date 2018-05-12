@@ -1,4 +1,5 @@
 public abstract class surPlage implements Pechable{
+	protected Txt txt = new Txt();
 	protected String nom;
 	protected int poids;
 	private int quantite = 1;
@@ -10,12 +11,12 @@ public abstract class surPlage implements Pechable{
 		return nom;
 	}
 	public Pechable estPecher(Personnage p){
-		System.out.println("Vous avez une touche !");
+		txt.textAffichage("Vous avez une touche !");
 		if (Math.random()<0.7){
-			System.out.println("Vous tirez comme un malade et vous sortez : "+super.toString());
+			txt.textAffichage("Vous tirez comme un malade et vous sortez : "+super.toString()+"\n");
 		}
 		else 
-			System.out.println("Vous manquez de peu votre proie !");
+			txt.textAffichage("Vous manquez de peu votre proie !\n");
 		return this;
 	}
 	public void reagirPeche(Personnage p){

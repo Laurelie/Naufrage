@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-public abstract class Lieu{
+public abstract class Lieu extends Txt{
+  protected Txt txt = new Txt();
   private ArrayList<Construction> constructions = new ArrayList<Construction>();
   private AnimauxChassable occupant;
   private String nom;
@@ -37,8 +38,8 @@ public abstract class Lieu{
       this.listeAnimaux = listeAnimaux;
   }
   public AnimauxChassable getOccupant(int i){
-    if(i>=0 && i<listePechable.size())
-      return listePechable.get(i);
+    if(i>=0 && i<listeAnimaux.size())
+      return listeAnimaux.get(i);
     return null;
   }
   */
@@ -62,7 +63,7 @@ public abstract class Lieu{
   public void setFruits(ArrayList<Fruits> listeFruits){
     this.listeFruits = listeFruits;
   }
-  public Fruits getFruits(int i){ //donner une position aleatoire dans listePechable
+  public Fruits getFruits(int i){ //donner une position aleatoire dans listeFruit
     if(i>=0 && i<listeFruits.size())
       return listeFruits.get(i);
     return null;
