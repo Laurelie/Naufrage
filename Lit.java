@@ -24,4 +24,7 @@ public class Lit extends Construction{
 			p.modifierDate(1);;
 		}
 	}
+	public String toString() {
+		return("Lit");
+	}
 }

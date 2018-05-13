@@ -31,6 +31,12 @@ public abstract class Lieu extends Txt{
   public AnimauxChassable getOccupant(){
     return(occupant);
   }
+  
+  public void interagirConstruction(int n) {
+	  for(int i =0;i<constructions.size();i++) {
+		  txt.textAffichage((i+n+1) + ") Interagir avec " + constructions.get(i).toString() + "\n");
+	  }
+  }
 
 //LE TOP ce serait de faire comme avec les poissons, faire un tableau d'animaux chassables puis tiré au sort SEULEMENT : PB dans combattre
 /*

@@ -11,11 +11,11 @@ public class TestNaufrage extends Txt{
 		String str = sc.nextLine();
 		System.out.println("");
 		Personnage p = new Personnage(str);
-		/*p.ramasser(new Bois(10));
+		p.ramasser(new Bois(40));
 		p.ramasser(new Pierre(5));
 		p.ramasser(new Ours());
 		p.ramasser(new Lapin());
-		p.ramasser(new Fil(1));*/
+		p.ramasser(new Fil(1));
 		Action.agir(p);
 	}
 }

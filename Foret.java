@@ -10,15 +10,20 @@ public class Foret extends Lieu{
     super("Foret");
   }
   public void choixAction(Personnage p){
-    txt.textAffichage("1) Couper des arbres\n2) Ramasser des fruits\n\n\tPressez 0 pour retour.\n\n");
+    txt.textAffichage("1) Couper des arbres\n2) Ramasser des fruits\n");
+    this.interagirConstruction(2);
+    txt.textAffichage("\n\n\tPressez 0 pour retour.\n\n");
     int str = Integer.parseInt(sc.nextLine());
-    while( str < 0 || str > 3){
+    while( str < 0 || str > 2+this.getConstructions().size()){
       txt.textAffichage("Mauvaise selection. Recommencez.\n");
       str = Integer.parseInt(sc.nextLine());
     }
     if(str==0) return;
     if(str==1) p.couperArbre();
     if(str==2) p.cueillir();
+    if(str>2) {
+    	this.getConstructions().get(str-3).interagir(p);
+    }
          
   }
   public void genererAnimal(){

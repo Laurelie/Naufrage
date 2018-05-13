@@ -8,14 +8,20 @@ public class Montagne extends Lieu{
     super("Montagne");
   }
   public void choixAction(Personnage p){
-    txt.textAffichage("1) Recuperer des minerais\n\n\tPressez 0 pour retour.\n\n");
+    txt.textAffichage("1) Recuperer des minerais\n");
+    this.interagirConstruction(1);
+    txt.textAffichage("\n\n\tPressez 0 pour retour.\n\n");
     int str = Integer.parseInt(sc.nextLine());
-  	while( str < 0 || str > 2){
+  	while( str < 0 || str > 1+this.getConstructions().size()){
   	    txt.textAffichage("Mauvaise selection. Recommencez.\n");
   	    str = Integer.parseInt(sc.nextLine());
   	}
     if(str==0) return;
     if(str==1) p.miner();
+    if(str>1) {
+    	this.getConstructions().get(str-2).interagir(p);
+    }
+         
   }
   public void genererAnimal(){
     if(Math.random()<0.5){

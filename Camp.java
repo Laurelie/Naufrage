@@ -16,6 +16,7 @@ public class Camp extends Construction {
 		return new Camp();
 	}
 	public void interagir(Personnage p) {
+		txt.textAffichage("Vous ne pouvez pas interagir avec votre camp, mais il vous protège des animaux sauvages");
 	}
 	public String toString() {
 		return "Camp";

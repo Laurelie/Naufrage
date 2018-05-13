@@ -4,6 +4,9 @@ public class Action extends Txt{
      static Txt txt = new Txt();
      static Scanner sc = new Scanner(System.in);
      public static void agir(Personnage p){
+    	if(Bateau.getNbBateau()==2) {
+    		return;
+    	}
      	if(p.getSante() <=0)     //LAU : arreter des qu'il y a game over
      		return;
      	if(p.getEnergie()<=0){

@@ -17,7 +17,7 @@ public class Personnage extends Txt{
 	private /*final*/ int poidsMaxInventaire;/*augmentable en craftant sac a dos?*/
 	private int energie;
 	private int sante;
-	private int date = 1;
+	private static int date = 1;
 	private final int nbMaxCamps = 2;
 	private int x;
 	private int y;
@@ -30,6 +30,8 @@ public class Personnage extends Txt{
 		listeFabrication.add(new Camp()); 
 		listeFabrication.add(new CannePeche());
 		listeFabrication.add(new Hache());
+		listeFabrication.add(new Lit());
+		listeFabrication.add(new Feu());
 		//creation de la carte
 		for(int i=0;i<6;i++) {
 			for(int j=0;j<6;j++) {
@@ -39,8 +41,14 @@ public class Personnage extends Txt{
 				}
 
 				
-				else if (i==1 || j==1)
-					carte[i][j] = new Plage();
+				else if (i==1 || j==1) {
+					if(i==3) {
+						carte[i][j] = new Village();
+					}
+					else {
+						carte[i][j] = new Plage();
+					}
+				}
 
 				else if (i==4 || j==4)
 					carte[i][j] = new Montagne();
@@ -64,11 +72,17 @@ public class Personnage extends Txt{
 	public int getY() {
 	 	return y;
 	}
-	public int getDate() {
+	public static int getDate() {
 		return date;
+	}
+	public ArrayList<Stockable> getAliments(){
+		return aliments;
 	}
 	public void modifierDate(int n) {
 		date = date + n;
+	}
+	public void ajouterAListeFabrication(Fabricable objet) {
+		listeFabrication.add(objet);
 	}
 	public String getNom(){
 	 	return nom;
@@ -291,6 +305,7 @@ public class Personnage extends Txt{
 			}
 			if(objet.toString().equals("Camp")) {
 				if(Camp.getNbCamps()>=nbMaxCamps) {
+					txt.textAffichage("Vous avez atteint la limite du nombre de camps constructibles");
 					return false;
 				}
 			}
@@ -308,6 +323,7 @@ public class Personnage extends Txt{
 				}
 			}
 			if(! estFabricable){
+				txt.textAffichage("Vous n'avez pas suffisement de ressources pour fabriquer cela.\n");
 				return false;
 			}
 			estFabricable = false;
@@ -326,7 +342,7 @@ public class Personnage extends Txt{
 		if(str==0) return;
 
 		if(!this.estFabricable(listeFabrication.get(str-1))){
-			txt.textAffichage("Vous n'avez pas suffisement de ressources pour fabriquer cela.\n");
+			return;
 		}
 		else{
 			this.modifierEnergie(-10); //pas modifier si on fait retour ou si on a pas les ressources necessaires
@@ -406,7 +422,9 @@ public class Personnage extends Txt{
 
 	public void fuir(){ 
   		(carte[x][y].getOccupant()).reagirFuite(this);
-  		carte[x][y].changerAnimal(null);
+  		if(!carte[x][y].getOccupant().toString().equals("Indigene")) {
+  			carte[x][y].changerAnimal(null);
+  		}
   	}
   		//PROBLEME Les elements de surPlage : ex Coquillage / Lunettes Cassees : leur toString est le toString de java : Coquillage@345641
   	public void pecher(){
