@@ -9,7 +9,9 @@ public class Feu extends Construction {
 		a.add(new Silex(2));
 		return(a);
 	}
-	
+	public String toString(){
+		return "Feu";
+	}
 	public Stockable clone() {
 		return new Feu();
 	}
@@ -23,7 +25,6 @@ public class Feu extends Construction {
     		str = Integer.parseInt(sc.nextLine());
     	}
 		((Mangeable)(p.getAliments().get(str-1))).estCuisine();
-		txt.textAffichage("Vous avez cuit un "+p.getAliments().get(str-1).toString());
 	}
 	
 }

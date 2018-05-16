@@ -14,8 +14,6 @@ public class CannePeche implements Fabricable{ //extends Construction { //on doi
 	public Stockable clone() {
 		return new CannePeche();
 	}
-	public void interagir(Personnage p) {
-	}
 	public String toString() {
 		return "Canne a Peche";
 	}

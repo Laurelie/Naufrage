@@ -1,14 +1,14 @@
 public class Ours extends AnimauxChassable{
   public Ours(){
-    super("Ours", 100, 80, (int)(Math.random()*10)+10);
+    super("Ours", 100, 50, 80);
   }
   public void reagirAttaque( Personnage p){
     if(Math.random()<0.2){
       txt.textAffichage("La griffe de l'ours vous manque de peu\n");
     }
     else{
-      txt.textAffichage("Vous prenez un coup de patte dans l'abdomen qui vous retire 20 PV\n");
-      p.modifierSante(-20);
+      txt.textAffichage("Vous prenez un coup de patte dans l'abdomen qui vous retire 25 PV\n");
+      p.modifierSante(-25);
     }
   }
   public void reagirFuite(Personnage p) { //LAU

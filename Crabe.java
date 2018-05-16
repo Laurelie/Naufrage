@@ -1,6 +1,6 @@
 public class Crabe extends AnimauxChassable{
 	public Crabe(){
-		super("Crabe", 10, 10, 10);
+		super("Crabe", 15, 10, 1);
 	}
 	public void reagirAttaque( Personnage p){
 	    if(Math.random()<0.5){

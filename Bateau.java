@@ -4,10 +4,10 @@ public class Bateau extends Construction {
 	private static int nbBateau = 0;
 	public Bateau() {
 		nbBateau++;
-		if (nbBateau==2) {
-			txt.textAffichage("Bravo vous a finallement réussi à réparer le bateau des indigènes!!! \n Vous réussissez à vous enfuire avec... En seulement " + Personnage.getDate() + "jours!");
-			}
+		if (nbBateau==2){ //PQ 2?
+			txt.textAffichage("Bravo vous a finalement reussi a reparer le bateau des indigenes!!! \n Vous reussissez a vous enfuir avec... En seulement " + Personnage.getDate() + "jours!\n\n\t\t\tSUCCESS\n");
 		}
+	}
 	public static int getNbBateau() {
 		return nbBateau;
 	}

@@ -11,9 +11,9 @@ public abstract class surPlage implements Pechable{
 		return nom;
 	}
 	public Pechable estPecher(Personnage p){
-		txt.textAffichage("Vous avez une touche !");
+		txt.textAffichage("Vous avez une touche !\n");
 		if (Math.random()<0.7){
-			txt.textAffichage("Vous tirez comme un malade et vous sortez : "+super.toString()+"\n");
+			txt.textAffichage("Vous tirez comme un malade et vous sortez : "+nom+"\n");
 		}
 		else 
 			txt.textAffichage("Vous manquez de peu votre proie !\n");

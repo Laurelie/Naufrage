@@ -11,6 +11,7 @@ public class Personnage extends Txt{
 	Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
 	private ArrayList<Stockable> equipement = new ArrayList<Stockable>(2); //Pourquoi 2 ?
 	private final ArrayList<Fabricable> listeFabrication = new ArrayList<Fabricable>();
+	private ArrayList<Stockable> listeConstruction = new ArrayList<Stockable>();
 	private ArrayList<Stockable> aliments = new ArrayList<Stockable>();
 	private ArrayList<Stockable> ressourcesNonComestibles = new ArrayList<Stockable>();
 	private int poidsInventaire; 
@@ -27,9 +28,9 @@ public class Personnage extends Txt{
 		equipement.add(p);
 		//creation des fabrications possibles
 		listeFabrication.add(new Lance());
-		listeFabrication.add(new Camp()); 
-		listeFabrication.add(new CannePeche());
 		listeFabrication.add(new Hache());
+		listeFabrication.add(new CannePeche());
+		listeFabrication.add(new Camp()); 
 		listeFabrication.add(new Lit());
 		listeFabrication.add(new Feu());
 		//creation de la carte
@@ -40,7 +41,6 @@ public class Personnage extends Txt{
 					carte[i][j].decouvrir(); //la mer doit etre notifie tout le temps
 				}
 
-				
 				else if (i==1 || j==1) {
 					if(i==3) {
 						carte[i][j] = new Village();
@@ -63,8 +63,11 @@ public class Personnage extends Txt{
     	x=1;
     	y=1;
     	carte[x][y].decouvrir();
-    	poidsInventaire =0;
-    	poidsMaxInventaire=1500;
+    	poidsInventaire = 0;
+    	poidsMaxInventaire = 1000;
+	}
+	public String getNom(){
+	 	return nom;
 	}
 	public int getX() {
 	 	return x;
@@ -75,48 +78,41 @@ public class Personnage extends Txt{
 	public static int getDate() {
 		return date;
 	}
-	public ArrayList<Stockable> getAliments(){
-		return aliments;
-	}
 	public void modifierDate(int n) {
 		date = date + n;
-	}
-	public void ajouterAListeFabrication(Fabricable objet) {
-		listeFabrication.add(objet);
-	}
-	public String getNom(){
-	 	return nom;
 	}
 	public int getEnergie(){
 	  	return energie;
 	}
-	public Lieu[][] getCarte(){
-	  	return carte;
-	}
 	public void modifierEnergie(int nb){
 	  	energie= energie+nb;
-	  	if(energie<=0){
-	    	//txt.textAffichage("\nVous vous evanouissez a cause de la fatigue.\n\n");
-	    	/*Reste a definir ce que ca fait de s'evanouir*/
-	    }
-	  	if(energie>100) {
+	  	if(energie<=0)
+	    	txt.textAffichage("\n\tVous vous effondrez a cause de la fatigue !\n\n");
+	  	if(energie>100)
 	  		energie = 100;
-	  	}
 	}
 	public int getSante(){
     	return sante;
  	}
 	public void modifierSante(int nb){
-	  	sante= sante+nb;
-	  	if(sante<=0){
-	    	txt.textAffichage("\n\tVous etes mort.... GAME OVER\n\n");
-	    }
-	  	if(sante>100) {
+	  	sante = sante + nb;
+	  	if(sante<=0)
+	    	txt.textAffichage("\n\tVous etes mort au bout de "+getDate()+"jours.... \n\n\t\t\tGAME OVER\n\n");
+	  	if(sante>=100)
 	  		sante=100;
-	  	}
 	}
 	public void afficherStatut(){ //LAU
-		txt.textAffichage("Vous etes "+nom+"\nSante: "+sante+"\nEnergie: "+energie+"\nVous portez "+poidsInventaire+" pds /" +poidsMaxInventaire+ "pds\n");
+		txt.textAffichage("Vous etes "+nom+"\nSante: "+sante+" / 100\nEnergie: "+energie+" / 100\nVous portez "+poidsInventaire+" pds / " +poidsMaxInventaire+ " pds\n\n");
+		txt.textAffichage("\t\t\tPressez 0 pour retour.\n\n");
+		int str = Integer.parseInt(sc.nextLine());
+		while(str!=0){
+			txt.textAffichage("Commande invalide. Recommencez\n");
+			str = Integer.parseInt(sc.nextLine());
+		}
+		return;
+	}
+	public Lieu[][] getCarte(){
+	  	return carte;
 	}
 	public void afficherCarte(){
 		txt.textAffichage("Voici votre carte :\n");
@@ -138,7 +134,14 @@ public class Personnage extends Txt{
 			}
 			txt.textAffichage(ligne+"\n");
 		}
-		txt.textAffichage("\nInconnu = In : vous n'avez pas encore découvert cet endroit\nMontagne = Mo\nForet = Fo\nMer = Me\nPlage = Pl\nVotre position = XX\nCamp = Ca\n\n");
+		txt.textAffichage("\nInconnu = In : vous n'avez pas encore découvert cet endroit\nMontagne = Mo\nForet = Fo\nMer = Me\nPlage = Pl\nCamp = Ca\nVotre position = XX\n\n");
+		txt.textAffichage("\t\t\tPressez 0 pour retour.\n\n");
+		int str = Integer.parseInt(sc.nextLine());
+		while(str!=0){
+			txt.textAffichage("Commande invalide. Recommencez\n");
+			str = Integer.parseInt(sc.nextLine());
+		}
+		return;
 	}
 	public void afficherListe(ArrayList<Stockable> liste){
 		System.out.println("");
@@ -155,7 +158,7 @@ public class Personnage extends Txt{
 	}
 	
 	public void consulterInventaire(){
-		txt.textAffichage("Que voulez vous consulter? \n 1) Besace a nourriture \n 2) Sacoche a ressources \n 3) Equipement \n 4) Constructions \n\n\tPressez 0 pour revenir en arriere\n");
+		txt.textAffichage("Que voulez vous consulter? \n 1) Besace a nourriture \n 2) Sacoche a ressources \n 3) Equipement \n 4) Constructions \n\n\t\t\tPressez 0 pour retour\n");
 		int str = Integer.parseInt(sc.nextLine());
 		while(str<0 || str>4){
 			txt.textAffichage("Commande invalide. Recommencez\n");
@@ -163,34 +166,47 @@ public class Personnage extends Txt{
 		}
 		if(str==0)
 			return;
+
+		if(str == 4){
+			afficherListe(listeConstruction);
+			txt.textAffichage("\t\t\tPressez 0 pour retour.\n");
+			str = Integer.parseInt(sc.nextLine());
+			while(str!=0){
+				txt.textAffichage("Commande invalide. Recommencez\n");
+				str = Integer.parseInt(sc.nextLine());
+			}
+			consulterInventaire();
+			return;
+		}
+
 		txt.textAffichage("Selectionner un element pour le jeter.\n");
 		if(str == 1){
-			this.afficherListe(aliments);
-			txt.textAffichage("\tPressez 0 pour retour.\n");
+			afficherListe(aliments);
+			txt.textAffichage("\t\t\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
 			while(str<0 || str>aliments.size()){
 				txt.textAffichage("Commande invalide. Recommencez\n");
 				str = Integer.parseInt(sc.nextLine());
 			}
 			if (str==0) {
-				this.consulterInventaire();
+				consulterInventaire();
 				return;
 			}
 			txt.textAffichage("Combien voulez vous en jeter?\n");
 			int quantite = Integer.parseInt(sc.nextLine());
-			this.jeterObjet(str-1,quantite,aliments);
+			jeterObjet(str-1,quantite,aliments);
 			return;
 		}
 		if(str == 2){
 			afficherListe(ressourcesNonComestibles);
-			txt.textAffichage("\tPressez 0 pour retour.\n");
+			txt.textAffichage("\t\t\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
 			while(str<0 || str>ressourcesNonComestibles.size()){
 				txt.textAffichage("Commande invalide. Recommencez\n");
 				str = Integer.parseInt(sc.nextLine());
 			}
 			if (str==0) {
-				this.consulterInventaire();
+				consulterInventaire();
 				return;
 			}
 			txt.textAffichage("Combien voulez vous en jeter?\n");
@@ -199,37 +215,32 @@ public class Personnage extends Txt{
 			return;
 		}
 		if(str == 3){
-			this.afficherListe(equipement);
-			txt.textAffichage("\tPressez 0 pour retour.\n");
+			afficherListe(equipement);
+			txt.textAffichage("\t\t\tPressez 0 pour retour.\n");
 			str = Integer.parseInt(sc.nextLine());
-			while(str<=0 || str>equipement.size()){
+			while(str<0 || str>equipement.size()){
 				txt.textAffichage("Commande invalide. Recommencez\n");
 				str = Integer.parseInt(sc.nextLine());
 			}
-			if (str==0) {
-				this.consulterInventaire();
+			if (str==0 || str ==1) {
+				if(str==1)
+					txt.textAffichage("Vous ne pouvez jeter vos poings\n\n");
+				consulterInventaire();
 				return;
 			}
 			jeterObjet(str-1,1,equipement);
 			return;
 		}
-		/*if(str == 4){
-			afficherListe(constructions);
-		}*/
-}
-			//PROBLEME SI ON JETE LES POINGS : il disparaisse
-  public void jeterObjet(int i, int quantite, ArrayList<Stockable> liste){
-	  if(i<liste.size()){
-		  if((liste.get(i)).getQuantite()<quantite){
-			  txt.textAffichage("Vous avez moins de "+ quantite +" "+(liste.get(i)).toString()+"\n");
-		  }
-		  //J'ai enleve le remove si cst la meme quantite : ca fonctionne mntn avant ca bug (par exemple Ours x1 je jetais une quantite et ca bounds exception)
-		  else{
-			  (liste.get(i)).modifierQuantite(-quantite);
-		  }
-		  poidsInventaire -= quantite*((liste.get(i)).getPoids());
-	  }
-  }
+	}
+  	public void jeterObjet(int i, int quantite, ArrayList<Stockable> liste){
+	  	if(i<liste.size()){
+		  	if((liste.get(i)).getQuantite()<quantite)
+			  	txt.textAffichage("Vous avez moins de "+ quantite +" "+(liste.get(i)).toString()+"\n");
+		  	else
+			  	(liste.get(i)).modifierQuantite(-quantite);
+		  	poidsInventaire -= quantite*((liste.get(i)).getPoids());
+	  	}
+  	}
 	  
  	public void ramasser(Stockable objet){
     	if (poidsInventaire+objet.getPoids() > poidsMaxInventaire)
@@ -251,6 +262,7 @@ public class Personnage extends Txt{
 				equipement.add((Arme)objet);
 				return;
 			}
+
 			for(int i =0; i<ressourcesNonComestibles.size();i++){
 				if(((ressourcesNonComestibles.get(i)).toString()).equals(objet.toString())){
 					ressourcesNonComestibles.get(i).modifierQuantite(objet.getQuantite());;
@@ -274,21 +286,26 @@ public class Personnage extends Txt{
 	    if(direction.equals("Est")){
 	      	y++;
 	    }
-	    if(carte[x][y].getConstructions().size()!= 0) {
+	    if(carte[x][y].getConstructions().size()!= 0)
 	    	txt.textAffichage("Vous arrivez dans un de vos camps\n");
-	    }
-	    else {
+	    else
 	    	carte[x][y].decrireLieu();
-	    }
+
 	    carte[x][y].decouvrir();
 	    carte[x][y].genererAnimal();
 	    carte[x][y].genererObjet();
   	}
 
   	public void mAjprofil(){
-  		txt.textAffichage("\t\t\t\t\t"+this.getSante()+"% de vie restant\n");
-  		txt.textAffichage("\t\t\t\t\t"+this.getEnergie()+"% d'energie restant\n\n");
+  		txt.textAffichage("\t\t\t\t\tJours "+getDate()+" sur l'ile\n");
+  		txt.textAffichage("\t\t\t\t\t"+getSante()+" Points de vie restants\n");
+  		txt.textAffichage("\t\t\t\t\t"+getEnergie()+" Points d'energie restants\n\n");
   	}
+
+  	//pour le bateau : fabricable seulement si découvert
+  	public void ajouterAListeFabrication(Fabricable objet) {
+		listeFabrication.add(objet);
+	}
 
     public boolean estFabricable(Fabricable objet){
 		boolean estFabricable = false;
@@ -309,7 +326,6 @@ public class Personnage extends Txt{
 					return false;
 				}
 			}
-			
 		}
 		for(int i=0;i<(objet.listeMateriaux()).size();i++){
 			for(int j = 0; j<aliments.size(); j++){
@@ -335,37 +351,39 @@ public class Personnage extends Txt{
 		txt.textAffichage("Que voulez vous fabriquer ?\n\n");
 		for(int i = 0; i<listeFabrication.size(); i++){
 			txt.textAffichage((i+1)+"- "+(listeFabrication.get(i)).toString());
-			this.afficherListe(listeFabrication.get(i).listeMateriaux());
+			afficherListe(listeFabrication.get(i).listeMateriaux());
 		}
-		txt.textAffichage("\nPressez 0 pour retour\n\n");
+		txt.textAffichage("\n\t\t\tPressez 0 pour retour\n\n");
 		int str = Integer.parseInt(sc.nextLine());
 		if(str==0) return;
 
-		if(!this.estFabricable(listeFabrication.get(str-1))){
+		if(!estFabricable(listeFabrication.get(str-1))){
+			fabriquer();
 			return;
 		}
 		else{
-			this.modifierEnergie(-10); //pas modifier si on fait retour ou si on a pas les ressources necessaires
+			modifierEnergie(-15); //pas modifier si on fait retour ou si on a pas les ressources necessaires
 			if(listeFabrication.get(str-1) instanceof Construction){
 				carte[x][y].getConstructions().add((Construction)listeFabrication.get(str-1).clone());
+				listeConstruction.add(listeFabrication.get(str-1));
 			}
 			else{
-				this.ramasser(listeFabrication.get(str-1).clone());
+				ramasser(listeFabrication.get(str-1).clone());
 			}
 			for(int i=0;i<((listeFabrication.get(str-1)).listeMateriaux()).size();i++){
 				for(int j = 0; j<aliments.size(); j++){
 					if( (aliments.get(j)).toString()==(((listeFabrication.get(str-1)).listeMateriaux()).get(i)).toString()){
-						this.jeterObjet(j,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),aliments);
+						jeterObjet(j,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),aliments);
 					}
 				}
 				for(int k = 0; k<ressourcesNonComestibles.size(); k++){
 					if( (ressourcesNonComestibles.get(k)).toString()==(((listeFabrication.get(str-1)).listeMateriaux()).get(i)).toString()){
-						this.jeterObjet(k,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),ressourcesNonComestibles);
+						jeterObjet(k,(listeFabrication.get(str-1)).listeMateriaux().get(i).getQuantite(),ressourcesNonComestibles);
 					}
 				}
 				
 			}
-			txt.textAffichage("Vous avez fabrique un " + listeFabrication.get(str-1).toString()+"\n");
+			txt.textAffichage("Vous avez fabrique " + listeFabrication.get(str-1).toString()+"\n");
 		}
   	}
   
@@ -373,8 +391,8 @@ public class Personnage extends Txt{
 	  	if (aliments.isEmpty())
 	  		txt.textAffichage("Vous n'avez rien a manger.\n");
 	    else{
-	    	this.afficherListe(aliments);
-	    	txt.textAffichage("Selectionnez un aliment a manger\n\n\nPressez 0 pour annuler\n");
+	    	afficherListe(aliments);
+	    	txt.textAffichage("Selectionnez un aliment a manger\n\n\n\t\t\tPressez 0 pour annuler\n");
 	    	int str = Integer.parseInt(sc.nextLine());
 	    	while( str < 0 || str > aliments.size()){
 	    		txt.textAffichage("Mauvaise selection. Recommencez.\n");
@@ -382,11 +400,17 @@ public class Personnage extends Txt{
 	    	}
 	    	if(str==0)
 	    		return;
-	    	if (sante <= 100){
-	      		sante += ((Mangeable)(aliments.get(str-1))).estMange(this); //le choix commence a 1
-	      	}
+	      	modifierSante(((Mangeable)(aliments.get(str-1))).estMange(this)); //le choix commence a 1
 	    }
  	}
+
+ 	public void fuir(){ 
+  		(carte[x][y].getOccupant()).reagirFuite(this);
+  		if(!carte[x][y].getOccupant().toString().equals("Indigene")) {
+  			carte[x][y].changerAnimal(null);
+  		}
+		modifierEnergie(-5);
+  	}
 
   	public void combattre(){
 	    Arme armeUtilisee;
@@ -396,7 +420,7 @@ public class Personnage extends Txt{
 	    }
 	    else{
 	      	txt.textAffichage("Quelle arme voulez vous utiliser?\n");
-	      	this.afficherListe(equipement);
+	      	afficherListe(equipement);
 	      	int str = Integer.parseInt(sc.nextLine());
 	      	while( str < 0 || str > equipement.size()){
 	    		txt.textAffichage("Mauvaise selection. Recommencez.\n");
@@ -409,24 +433,17 @@ public class Personnage extends Txt{
 	      	armeUtilisee.descriptionReussite();
 	      	if((carte[x][y].getOccupant()).getSante()<=0){
 	        	(carte[x][y].getOccupant()).descriptionMort();
-	        	this.ramasser(carte[x][y].getOccupant());
+	        	ramasser(carte[x][y].getOccupant());
 	        	(carte[x][y]).changerAnimal(null);
+			}
 		}
-	}
     	else
       		armeUtilisee.descriptionEchec();
-    	if (carte[x][y].getOccupant() != null){ //ajout de possibilite mort donc plus sur la case
+    	if (carte[x][y].getOccupant() != null)
     		(carte[x][y].getOccupant()).reagirAttaque(this);
-    	}
 	}
 
-	public void fuir(){ 
-  		(carte[x][y].getOccupant()).reagirFuite(this);
-  		if(!carte[x][y].getOccupant().toString().equals("Indigene")) {
-  			carte[x][y].changerAnimal(null);
-  		}
-  	}
-  		//PROBLEME Les elements de surPlage : ex Coquillage / Lunettes Cassees : leur toString est le toString de java : Coquillage@345641
+
   	public void pecher(){
   		boolean bool = false;
   		for(int i =0; i<ressourcesNonComestibles.size();i++){
@@ -436,35 +453,36 @@ public class Personnage extends Txt{
   			}
    		}
    		if(bool){
-   			//J'ai une canne : j'effectue l'action : mon energie baisse
-    		this.modifierEnergie(-10);
+    		modifierEnergie(-5);
    			txt.textAffichage("Vous lancez votre canne !\n");
    			int alea = (int)(Math.random()*7); //7pechables
    			Pechable peche = (carte[x][y].getPechable(alea)).estPecher(this);
    			if(poidsInventaire+peche.getPoids() <= poidsMaxInventaire)
-	   			this.ramasser(peche);
+	   			ramasser(peche);
 	   		else
 	   			txt.textAffichage("Vous n'avez plus de place dans l'inventaire. Vous jetez "+peche.toString()+"\n");
    			return;
    		}
    		txt.textAffichage("Vous n'avez pas de canne a peche pour pecher !\n");
   	}
+
   	public void dormir() {
   		energie = energie + 60;
   		if(carte[x][y].getConstructions().size()==0) {
   			if(Math.random()<0.3) {
-  				txt.textAffichage("Vous avez ete attaque par des animaux sauvages durant votre sommeil, vous perdez 15 PV\n");
+  				txt.textAffichage("\n\tVous avez ete attaque par des animaux sauvages durant votre sommeil, vous perdez 15 PV\n");
+  				modifierSante(-15);
   			}
   		}
   		else {
-  			txt.textAffichage("Votre camp vous protege des animaux sauvages\n");
+  			txt.textAffichage("\n\tVotre camp vous protege des animaux sauvages\n");
   		}
   		date++;
-  		txt.textAffichage("Vous vous reveillez le lendemain matin\n");
+  		txt.textAffichage("\n\tVous vous reveillez le lendemain matin\n");
   	}
+
   	public void cueillir(){
-  		//Je cherche des fruits : j'effectue l'action : mon energie baisse
-    	this.modifierEnergie(-10);
+    	modifierEnergie(-5);
   		txt.textAffichage("Vous cherchez des fruits !\n");
 		int alea = (int)(Math.random()*2); //2fruits
 		Fruits fruit = carte[x][y].getFruits(alea);
@@ -472,63 +490,75 @@ public class Personnage extends Txt{
 	    txt.textAffichage("Vous avez ramasse "+i+" "+fruit.toString()+" !\n");
 	    fruit.modifierQuantite(i);
 		if(poidsInventaire+fruit.getPoids() <= poidsMaxInventaire)
-			this.ramasser(fruit);
+			ramasser(fruit);
 		else
 			txt.textAffichage("Vous n'avez plus de place dans l'inventaire. Vous jetez "+fruit.toString()+"\n");
   	}
 
   	public void miner(){
   		recolterRessources(new Pierre(0));
-  		//j'effectue l'action : mon energie baisse
-    	this.modifierEnergie(-10);
+    	modifierEnergie(-10);
   	}
 
   	public void couperArbre(){
   		recolterRessources(new Bois(0));
   		//j'effectue l'action : mon energie baisse
-    	this.modifierEnergie(-10);
+    	modifierEnergie(-10);
   	}
+
+  	//pour cuisiné les aliments
+  	public ArrayList<Stockable> getAliments(){
+		return aliments;
+	}
 
   	public void recolterRessources(Stockable objet){
   		Arme armeUtilisee;
+  		int str;
+  		//choisir une arme
 	    if(equipement.size()==1){
-	      txt.textAffichage("Vous n'avez pas d'arme, vous ramassez ce que vous trouvez par terre.\n");
-	      armeUtilisee = (Arme) equipement.get(0);
-	      int i= (int)(Math.random()*4);
-	      txt.textAffichage("Vous avez trouve "+i+" "+objet.toString()+" !\n");
-	      objet.modifierQuantite(i);
-	      this.ramasser(objet); //chance de ramasser 1 à 3 de bois
+	      	armeUtilisee = (Arme) equipement.get(0);
+	      	str = 0;
 	    }
-	    else{
+	    else {
 	      	txt.textAffichage("Quelle arme voulez vous utiliser?\n");
-	      	this.afficherListe(equipement);
-	      	int str = Integer.parseInt(sc.nextLine());
+	      	afficherListe(equipement);
+	      	str = Integer.parseInt(sc.nextLine());
 	      	while( str < 0 || str > equipement.size()){
 	    		txt.textAffichage("Mauvaise selection. Recommencez.\n");
 	    		str = Integer.parseInt(sc.nextLine());
 	    	}
 	      	armeUtilisee = (Arme) equipement.get(str-1); //le choix commence a 1
-	      	if(str==1){ //il prend les poings
-	      		int i= (int)(Math.random()*4);
-	   		    txt.textAffichage("Vous avez trouve "+i+" "+objet.toString()+" !\n");
-	   		    objet.modifierQuantite(i);
-	   		    this.ramasser(objet); //chance de ramasser 1 à 3 de bois
-	      	}
-	      	else if((int)(Math.random()*5)<(armeUtilisee.getDegat())){ //si degat plus petit que 5 : 1 chance sur degat pour que l'arme casse 
-	      		int i= (int)(Math.random()*6)+1;
-	      		txt.textAffichage("Vous avez ramasse "+i+" "+objet.toString()+" !\n");
-	      		objet.modifierQuantite(i);
-	      		this.ramasser(objet); //chance de ramasser 1 à 3 de bois
-	      	}
-	      	else{
-	      		txt.textAffichage("Vous avez casser votre "+armeUtilisee.getNom()+" en essayant de recolter "+objet.toString()+" !\n");
-	      		this.jeterObjet(str-1, 1, equipement);
-	      	}
 	    }
-	    if(Math.random()<0.3){ //chance de recolter du fil aussi
-	    	txt.textAffichage("Vous trouvez du fil !\n");
+	    //recolter
+	    if (str == 0){
+	    	txt.textAffichage("Vous n'utilisez pas d'arme, vous ramassez ce que vous trouvez par terre.\n");
+	    	int i= (int)(Math.random()*4);
+		    txt.textAffichage("Vous avez trouve "+i+" "+objet.toString()+" !\n");
+		    objet.modifierQuantite(i);
+		    ramasser(objet); //chance de ramasser 0 à 3 de bois
+	    }
+	    else if((int)(Math.random()*5)<(armeUtilisee.getDegat())){ //si degat plus petit que 5 : 1 chance sur degat pour que l'arme casse 
+      		int i= (int)(Math.random()*6)+1;
+      		txt.textAffichage("Vous avez ramasse "+i+" "+objet.toString()+" !\n");
+      		objet.modifierQuantite(i);
+      		ramasser(objet); //chance de ramasser 1 à 5 de bois
+	    }
+	    else{
+	      	txt.textAffichage("Vous avez casser votre "+armeUtilisee.getNom()+" en essayant de recolter "+objet.toString()+" !\n");
+	      	jeterObjet(str-1, 1, equipement);
+	    }
+
+	    //chance de recolter du fil en même temps
+	    if(Math.random()<0.3){
+	    	txt.textAffichage("Vous trouvez du Fil !\n");
 	    	Fil fil = new Fil(1);
-	    	this.ramasser(fil);
+	    	ramasser(fil);
+  		}
+  		//chance de recolter du silex en même temps
+	    if(Math.random()<0.3){
+	    	txt.textAffichage("Vous trouvez 1 Silex !\n");
+	    	Silex silex = new Silex(1);
+	    	ramasser(silex);
   		}
 	}
 }

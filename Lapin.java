@@ -1,6 +1,6 @@
 public class Lapin extends AnimauxChassable{
   	public Lapin(){
-    	super("Lapin",(int)(Math.random()*20+10),20,(int)(Math.random()*10)+10);
+    	super("Lapin",25,20,2);
   	}
   	public void reagirAttaque( Personnage p){
     	if(Math.random()<0.7){

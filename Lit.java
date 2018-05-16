@@ -10,6 +10,7 @@ public class Lit extends Construction{
 	public ArrayList<Stockable> listeMateriaux(){
 		ArrayList<Stockable> buffer = new ArrayList<Stockable>();
 		buffer.add(new Bois(15));
+		buffer.add(new Fil(2));
 		return buffer;
 	}
 	public void interagir(Personnage p) {

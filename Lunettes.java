@@ -1,5 +1,5 @@
 public class Lunettes extends surPlage{
 	public Lunettes(){
-		super("Lunettes Cassees",3);
+		super("Lunettes Cassees",5);
 	}
 }

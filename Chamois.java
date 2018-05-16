@@ -1,6 +1,6 @@
 public class Chamois extends AnimauxChassable{
 	public Chamois(){
-		super("Chamois", 20, 20, 20);
+		super("Chamois", 20, 20, 50);
 	}
 	public void reagirAttaque( Personnage p){
 	    if(Math.random()<0.5){

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Hache extends Arme implements Fabricable{
    public Hache(){
-      super(6,0.7,"Hache");
+      super(20,0.7,"Hache");
    }
     
    public ArrayList<Stockable> listeMateriaux(){
@@ -12,7 +12,7 @@ public class Hache extends Arme implements Fabricable{
 	   return liste;
    }
    public int getPoids() {
-	   return(500);
+	   return 400;
    }
    public Stockable clone() {
 	   return new Hache();

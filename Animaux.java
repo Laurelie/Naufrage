@@ -23,6 +23,9 @@ public abstract class Animaux extends Txt implements Mangeable{
 	public boolean getVivant(){ 
 		return vivant;
 	}
+	public boolean getCru(boolean cru){ 
+		return cru;
+	}
 	public void setCru(boolean cru){ 
 		this.cru = cru;
 	}
@@ -44,6 +47,8 @@ public abstract class Animaux extends Txt implements Mangeable{
 	public int estMange(Personnage p){ 
 		if (cru){
 	    	txt.textAffichage("Vous mangez un "+nom+" cru : -"+rapportAlimentaire+" de santé\n");
+	    	if(nom.equals("Indigene")) //indigene a un rapportAlimentaire negatif
+	    		return rapportAlimentaire;
 	    	return 0-rapportAlimentaire;
 	  	}
 	  	else{
@@ -54,14 +59,16 @@ public abstract class Animaux extends Txt implements Mangeable{
 	public void estCuisine(){ 
 	  	if (!vivant){ //vivant == False
 	    	cru = false;
+	    	txt.textAffichage("Vous avez cuit un "+nom);
 	  	}
 	  	else
 	    	txt.textAffichage("On ne peut pas cuisiné un "+nom+" vivant\n");
 	}
-	  public int getQuantite() {
+
+	public int getQuantite() {
 		  return quantite;
-	  }
-	  public void modifierQuantite(int n) {
+	}
+	public void modifierQuantite(int n) {
 		  quantite+=n;
-	  }
+	}
 }

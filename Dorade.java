@@ -1,6 +1,6 @@
 public class Dorade extends Poissons{
 	public Dorade(){
-		super("Dorade",(int)(Math.random()*20+10),20);
+		super("Dorade",30,30);
 	}
 	public void reagirPeche( Personnage p){
     	if(Math.random()<0.5){

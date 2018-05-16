@@ -24,7 +24,7 @@ public abstract class Fruits implements Mangeable{
     public int estMange(Personnage p){ 
 		if (poison){
 	    	txt.textAffichage("Vous mangez "+nom+" empoisonne : -"+rapportAlimentaire+" de santé\n");
-	    	return 0-rapportAlimentaire;
+	    	return rapportAlimentaire;
 	  	}
 	  	else{
 	    	txt.textAffichage("Vous mangez "+nom+" +"+rapportAlimentaire+" de santé\n");

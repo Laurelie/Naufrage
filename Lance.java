@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Lance extends Arme implements Fabricable{
    public Lance(){
-      super(3,0.7,"Lance");
+      super(10,0.6,"Lance");
    }
     
    public ArrayList<Stockable> listeMateriaux(){
@@ -12,7 +12,7 @@ public class Lance extends Arme implements Fabricable{
 	   return liste;
    }
    public int getPoids() {
-	   return(500);
+	   return 300;
    }
    public Stockable clone() {
 	   return new Lance();

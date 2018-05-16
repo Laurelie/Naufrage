@@ -46,6 +46,7 @@ public class Foret extends Lieu{
   public void genererObjet(){
     listeFruits.add(new Pomme());
     listeFruits.add(new Baies());
+    listeFruits.add(new Cerise());
     this.setFruits(listeFruits);
   }
 
