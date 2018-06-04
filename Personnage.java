@@ -5,7 +5,6 @@ public class Personnage extends Txt{
 	Txt txt = new Txt();
 	Scanner sc = new Scanner(System.in);
 	/*private ArrayList<Lieu> carte = new ArrayList<Lieu>(); Je pense que si on fait une seule map il vaut mieux l'instancier comme ca:*/
-	private Lieu carte[][] = new Lieu[6][6];
 	private String nom;
 	/*private ArrayList<? extends Stockage> inventaire = new ArrayList<? extends Stockage>();
 	Je pense que c'est plus simple pour consulter tes armes avant un combat ou pour choisir ce que tu veux manger, de faire plusieurs listes, comme ca on affiche juste la liste*/
@@ -22,6 +21,7 @@ public class Personnage extends Txt{
 	private final int nbMaxCamps = 2;
 	private int x;
 	private int y;
+	private Lieu carte[][];
 	public Personnage(String nom){
 		//creation des equipements possibles
 		Poings p = new Poings();
@@ -33,33 +33,11 @@ public class Personnage extends Txt{
 		listeFabrication.add(new Camp()); 
 		listeFabrication.add(new Lit());
 		listeFabrication.add(new Feu());
-		//creation de la carte
-		for(int i=0;i<6;i++) {
-			for(int j=0;j<6;j++) {
-				if(i==0 || i==5 || j==0 || j==5){
-					carte[i][j]= new Mer();
-					carte[i][j].decouvrir(); //la mer doit etre notifie tout le temps
-				}
-
-				else if (i==1 || j==1) {
-					if(i==3) {
-						carte[i][j] = new Village();
-					}
-					else {
-						carte[i][j] = new Plage();
-					}
-				}
-
-				else if (i==4 || j==4)
-					carte[i][j] = new Montagne();
-
-				else 
-					carte[i][j] = new Foret();
-			}
-		}
 	    this.nom = nom;
 	   	energie = 100;
     	sante = 100;
+    	//carte
+    	carte = Ile.getCarte();
     	x=1;
     	y=1;
     	carte[x][y].decouvrir();
@@ -103,38 +81,6 @@ public class Personnage extends Txt{
 	}
 	public void afficherStatut(){ //LAU
 		txt.textAffichage("Vous etes "+nom+"\nSante: "+sante+" / 100\nEnergie: "+energie+" / 100\nVous portez "+poidsInventaire+" pds / " +poidsMaxInventaire+ " pds\n\n");
-		txt.textAffichage("\t\t\tPressez 0 pour retour.\n\n");
-		int str = Integer.parseInt(sc.nextLine());
-		while(str!=0){
-			txt.textAffichage("Commande invalide. Recommencez\n");
-			str = Integer.parseInt(sc.nextLine());
-		}
-		return;
-	}
-	public Lieu[][] getCarte(){
-	  	return carte;
-	}
-	public void afficherCarte(){
-		txt.textAffichage("Voici votre carte :\n");
-		String ligne ="\n";
-		for(int i=0;i<carte.length;i++){
-			ligne = "\t";
-			for(int j = 0;j<carte[i].length;j++){
-				if(x==i && y==j) {
-					ligne+= "  XX";
-				}
-				else {
-					if(carte[i][j].getConstructions().size()!=0) {
-						ligne+= "  Ca";
-					}
-					else {
-						ligne+= "  " +(carte[i][j]).getSymbole();
-					}
-				}
-			}
-			txt.textAffichage(ligne+"\n");
-		}
-		txt.textAffichage("\nInconnu = In : vous n'avez pas encore découvert cet endroit\nMontagne = Mo\nForet = Fo\nMer = Me\nPlage = Pl\nCamp = Ca\nVotre position = XX\n\n");
 		txt.textAffichage("\t\t\tPressez 0 pour retour.\n\n");
 		int str = Integer.parseInt(sc.nextLine());
 		while(str!=0){
@@ -455,8 +401,7 @@ public class Personnage extends Txt{
    		if(bool){
     		modifierEnergie(-5);
    			txt.textAffichage("Vous lancez votre canne !\n");
-   			int alea = (int)(Math.random()*7); //7pechables
-   			Pechable peche = (carte[x][y].getPechable(alea)).estPecher(this);
+   			Pechable peche = (carte[x][y].getPechable().estPecher(this));
    			if(poidsInventaire+peche.getPoids() <= poidsMaxInventaire)
 	   			ramasser(peche);
 	   		else
@@ -484,8 +429,7 @@ public class Personnage extends Txt{
   	public void cueillir(){
     	modifierEnergie(-5);
   		txt.textAffichage("Vous cherchez des fruits !\n");
-		int alea = (int)(Math.random()*2); //2fruits
-		Fruits fruit = carte[x][y].getFruits(alea);
+		Fruits fruit = carte[x][y].getFruits();
 		int i= (int)(Math.random()*5)+1;
 	    txt.textAffichage("Vous avez ramasse "+i+" "+fruit.toString()+" !\n");
 	    fruit.modifierQuantite(i);

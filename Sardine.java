@@ -1,5 +1,5 @@
 public class Sardine extends Poissons{
 	public Sardine(){
-		super("Sardine",20,15);
+		super("Sardine",(int)(Math.random()*10+12),(int)(Math.random()*7+10));
 	}
 }

@@ -61,20 +61,18 @@ public abstract class Lieu extends Txt{
 	public void setPechable(ArrayList<Pechable> listePechable){
 		this.listePechable = listePechable;
 	}
-	public Pechable getPechable(int i){ //donner une position aleatoire dans listePechable
-		if(i>=0 && i<listePechable.size())
-			return listePechable.get(i);
-		return null;
+	public Pechable getPechable(){ //donner une position aleatoire dans listePechable
+		int i = (int)(Math.random()*listePechable.size());
+		return listePechable.get(i);
 	}
 
 	//fruits
 	public void setFruits(ArrayList<Fruits> listeFruits){
 		this.listeFruits = listeFruits;
 	}
-	public Fruits getFruits(int i){ //donner une position aleatoire dans listeFruit
-		if(i>=0 && i<listeFruits.size())
-			return listeFruits.get(i);
-		return null;
+	public Fruits getFruits(){ //donner une position aleatoire dans listeFruit
+		int i = (int)(Math.random()*listeFruits.size());
+		return listeFruits.get(i);
 	}
 
 	public boolean estConnu() {

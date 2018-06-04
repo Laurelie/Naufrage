@@ -21,10 +21,7 @@ public class Foret extends Lieu{
     if(str==0) return;
     if(str==1) p.couperArbre();
     if(str==2) p.cueillir();
-    if(str>2) {
-    	this.getConstructions().get(str-3).interagir(p);
-    }
-         
+    if(str>2) this.getConstructions().get(str-3).interagir(p);
   }
   public void genererAnimal(){
     if(Math.random()<0.3){

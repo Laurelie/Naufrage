@@ -3,12 +3,15 @@ import java.util.Scanner;
 public class Action extends Txt{
 	static Txt txt = new Txt();
 	static Scanner sc = new Scanner(System.in);
-	public static void agir(Personnage p){
+	static boolean quitterJeu = false;
+	public static void agir(Personnage p) throws NumberFormatException{
 		if(Bateau.getNbBateau()==2){ //PQ 2 ?
 			return;
 		}
-		if(p.getSante() <=0)
+		if(p.getSante() <=0){
+			quitterJeu = true;
 			return;
+		}
 		if(p.getEnergie()<=0)
 			p.dormir();
 
@@ -24,7 +27,7 @@ public class Action extends Txt{
 		boolean est = false;
 		boolean ouest = false;
 		boolean commandeExecutee = false;
-		Lieu[][] carte = p.getCarte();
+		Lieu[][] carte = Ile.getCarte();
 		int x = p.getX();
 		int y = p.getY();
 		Lieu position = carte[x][y];
@@ -173,6 +176,7 @@ public class Action extends Txt{
 			//quitter le jeu
 			if (str==0){
 				txt.textAffichage("\tVous quittez le jeu au bout de "+p.getDate()+" jours\n");
+				quitterJeu = true;
 				return;
 			}
 			//Nord
@@ -211,7 +215,7 @@ public class Action extends Txt{
 			}
 			//Carte
 			if(str==7){
-				p.afficherCarte();
+				Ile.afficherCarte();
 				commandeExecutee=true;
 			}
 			//Statut
@@ -232,6 +236,7 @@ public class Action extends Txt{
 			if(!commandeExecutee){
 				txt.textAffichage("Commande introuvable. Recommencez\n");
 			}
+
 			Action.agir(p);
 		}
 	}

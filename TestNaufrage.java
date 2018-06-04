@@ -3,6 +3,7 @@ import java.lang.Thread;
 
 public class TestNaufrage extends Txt{
 	public static void main(String[] args) {
+		Ile chargementIle = new Ile();
 		Txt txt = new Txt();
      	Scanner sc = new Scanner(System.in);
      	String texte = "\nVous vous reveillez sur une plage deserte. Vous reprenez votre esprit petit à petit et vous vous souvenez que votre bateau a fait naufrage. \nVous ne voyez personne autour de vous... Vous etes seul.\n\nVous souvenez vous de votre nom ? Comment vous appelez-vous ?\n";
@@ -18,6 +19,13 @@ public class TestNaufrage extends Txt{
 		p.ramasser(new Fil(1));
 		p.ramasser(new Silex(3));
 
-		Action.agir(p);
+		while(!Action.quitterJeu){
+			try{
+				Action.agir(p);
+			}
+			catch(NumberFormatException e){
+				txt.textAffichage("Entrez un nombre !\n");
+			}
+		}
 	}
 }

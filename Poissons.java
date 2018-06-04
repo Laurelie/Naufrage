@@ -14,12 +14,12 @@ public abstract class Poissons extends Animaux implements Pechable{
 		return this;
 	}
 	public void reagirPeche( Personnage p){
-    	if(Math.random()<0.7){
+    	if(Math.random()<0.7)
       		txt.textAffichage(super.toString()+" est mort quand vous le ramenez à bord\n");
-    	}
     	else{
-    		txt.textAffichage(super.toString()+" vous donne un coup de queue avant de mourir. Vous retire 3 PV\n");
-      		p.modifierSante(-3);
+    		int blessure = (int)(Math.random()*5+1);
+    		txt.textAffichage(super.toString()+" vous donne un coup de queue avant de mourir. Vous retire "+blessure+" PV\n");
+      		p.modifierSante(-blessure);
     	}
   	}
 }

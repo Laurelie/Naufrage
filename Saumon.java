@@ -1,5 +1,5 @@
 public class Saumon extends Poissons{
 	public Saumon(){
-		super("Saumon",20,20);
+		super("Saumon",(int)(Math.random()*8+13),(int)(Math.random()*7+12));
 	}
 }
